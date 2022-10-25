@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        handIcon.transform.DOLocalMoveY(-1331.317f, 1.3f).SetEase(Ease.InOutBack);
+        handIcon.transform.DOLocalMoveY(-1050f, 1.3f).SetEase(Ease.InOutBack);
     }
 
     void Update()

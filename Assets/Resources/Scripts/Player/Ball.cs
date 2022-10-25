@@ -9,7 +9,6 @@ public class Ball : MonoBehaviour
     public List<Ball> ballNeighbors = new List<Ball>();
     
 
-
     public void Start()
     {
         ballcolor = this.GetComponent<Renderer>().material;
@@ -19,25 +18,19 @@ public class Ball : MonoBehaviour
 
     public List<Ball> NneighborsBall()
     {
-        if (row > 0)
-             ballNeighbors.Add(TileManager.Instance.ballGrid[row - 1, column]);
+        if (row > 0) ballNeighbors.Add(TileManager.Instance.ballGrid[row - 1, column]);
 
-        if (row < TileManager.Instance.width - 1)
-            ballNeighbors.Add(TileManager.Instance.ballGrid[row + 1, column]);
+        if (row < TileManager.Instance.width - 1) ballNeighbors.Add(TileManager.Instance.ballGrid[row + 1, column]);
 
-        if (column > 0)
-            ballNeighbors.Add(TileManager.Instance.ballGrid[row, column - 1]);
+        if (column > 0) ballNeighbors.Add(TileManager.Instance.ballGrid[row, column - 1]);
 
-        if (column < TileManager.Instance.width - 1)
-            ballNeighbors.Add(TileManager.Instance.ballGrid[row, column + 1]);
+        if (column < TileManager.Instance.width - 1) ballNeighbors.Add(TileManager.Instance.ballGrid[row, column + 1]);
 
         return ballNeighbors;
     }
 
 
-
-
-    // use this lines of code foe matching
+    // use this lines of code for matching balls
 
     private void OnTriggerStay(Collider other)
     {
@@ -45,7 +38,6 @@ public class Ball : MonoBehaviour
             if (other.tag == gameObject.tag && other.name != "player")
             {
                 int r = other.GetComponent<Ball>().row;
-            IF
                 int c = other.GetComponent<Ball>().column;
             
             if ((column == c && r <= (row + 1)) || ((row == r && c <= (column + 1))))

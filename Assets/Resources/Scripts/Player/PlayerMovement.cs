@@ -4,118 +4,112 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     bool isMoving;
+
     private Vector3 startPos, targetPos;
     private float timeToMove = 0.15f;
-    public TileManager tileManager;
-
-    public GameObject tril;
-
     private Vector3 shootDiriction;
+
+    public TileManager tileManager;
+    public GameObject trail;
     public Vector3 lastPos;
-
-    public bool keepM;
-
+    public bool keepMove;
     public Material[] ballColorMaterial;
-    MeshRenderer playerMat;
     public string[] tags;
+
+
+    Direction direction;
+    MeshRenderer playerMat;
     int colorIndex;
 
-    bool goLeft,goRight,goUp,goDown;
-    
+
     void Start()
     {
+        direction = Direction.up;
         colorIndex = Random.Range(0, 3);
         playerMat = gameObject.GetComponent<MeshRenderer>();
         playerMat.material = ballColorMaterial[colorIndex];
         gameObject.tag = tags[colorIndex];
 
-        tril.GetComponent<TrailRenderer>().endColor = ballColorMaterial[colorIndex].color;
-        tril.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
+        trail.GetComponent<TrailRenderer>().endColor = ballColorMaterial[colorIndex].color;
+        trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
+    }
 
+    void FixedUpdate()
+    {
+        CheckInput();
     }
 
 
-    void Update()
+    void CheckInput()
     {
-
-        tril.GetComponent<TrailRenderer>().endColor = ballColorMaterial[colorIndex].color;
-        tril.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
-
         if (transform.position.x == -1 && transform.position.y == -1)
-        { 
-            goUp = true;
-            goDown = false;
-            goRight = false;
-            goLeft = false; 
+        {
+            direction = Direction.up;
         }
-      
+
         if (transform.position.x == -1 && transform.position.y == (tileManager.gridSizeY + 1))
-        { 
-            goUp = false;
-            goDown = false;
-            goRight = true;
-            goLeft = false;     
+        {
+            direction = Direction.right;
         }
 
         if (transform.position.x == (tileManager.gridSizeX + 1) && transform.position.y == (tileManager.gridSizeY + 1))
         {
-            goUp = false;
-            goDown = true;
-            goRight = false;
-            goLeft = false;   
+            direction = Direction.down;
         }
 
 
         if (transform.position.x == (tileManager.gridSizeX + 1) && transform.position.y == -1)
         {
-            goUp = false;
-            goDown = false;
-            goRight = false;
-            goLeft = true;   
+            direction = Direction.left;
         }
+
 
 
         if (Input.GetMouseButton(0) && !isMoving)
         {
-
-            if (goUp == true)
+            switch (direction)
             {
-                keepM = false;
-                shootDiriction = Vector3.right;
-                StartCoroutine(MovePlayer(Vector3.up));
+                case Direction.up:
+                    keepMove = false;
+                    shootDiriction = Vector3.right;
+                    StartCoroutine(MovePlayer(Vector3.up));
 
-            }
+                    break;
 
-            else if (goDown == true)
-            {
-                    keepM = false;
+                case Direction.down:
+                    keepMove = false;
                     shootDiriction = Vector3.left;
                     StartCoroutine(MovePlayer(Vector3.down));
-            }
 
-            else if (goRight == true)
-            {
-                keepM = false;
-                shootDiriction = Vector3.down;
-                StartCoroutine(MovePlayer(Vector3.right));
-            }
+                    break;
+                case Direction.left:
+                    keepMove = false;
+                    shootDiriction = Vector3.up;
+                    StartCoroutine(MovePlayer(Vector3.left));
 
-            else if (goLeft == true)
-            {
-                keepM = false;
-                shootDiriction = Vector3.up;
-                StartCoroutine(MovePlayer(Vector3.left));
+                    break;
+
+                case Direction.right:
+                    keepMove = false;
+                    shootDiriction = Vector3.down;
+                    StartCoroutine(MovePlayer(Vector3.right));
+
+                    break;
+
+                default:
+                    break;
             }
         }
 
-         if (Input.GetKey(KeyCode.LeftShift) && !isMoving)
+
+
+        if (Input.GetKey(KeyCode.LeftShift) && !isMoving)
         {
             lastPos = transform.position;
-            keepM = true;
+            keepMove = true;
 
-            StartCoroutine(callMovePlayer());  
+            StartCoroutine(callMovePlayer());
         }
-
     }
 
     private IEnumerator MovePlayer(Vector3 direction)
@@ -144,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
         startPos = transform.position;
         targetPos = startPos + direction;
 
-        while (elapsedtime < timeToMove && keepM == true)
+        while (elapsedtime < timeToMove && keepMove == true)
         {
             transform.position = Vector3.Lerp(startPos, targetPos, (elapsedtime / timeToMove) *2);
             elapsedtime += Time.deltaTime;
@@ -156,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator callMovePlayer()
     {
-        while (keepM == true)
+        while (keepMove == true)
         {
             StartCoroutine(ShootPlayer(shootDiriction));
             yield return null;
@@ -170,6 +164,10 @@ public class PlayerMovement : MonoBehaviour
         
         playerMat.material = ballColorMaterial[colorIndex];
         gameObject.tag = tags[colorIndex];
+
+
+        trail.GetComponent<TrailRenderer>().endColor = ballColorMaterial[colorIndex].color;
+        trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -178,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag != gameObject.tag)
         {  
             Debug.Log("DIFFRENT");
-            keepM = false;
+            keepMove = false;
             transform.position = lastPos;
         }
 
