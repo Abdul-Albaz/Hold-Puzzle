@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class TileManager : MonoBehaviour
+public class TileManager : Singleton<TileManager>
 {
     public int gridSizeX;
     public int gridSizeY;
@@ -11,19 +11,21 @@ public class TileManager : MonoBehaviour
     public GameObject[] playerPrefab;
     public GameObject pathTile;
     
-    
     public Vector3 orginSpawnPoint;
 
-    public static Tile[,] tileGrid;
-    public static int width;
-    public static int height;
+    public Tile[,] tileGrid;
+    public Ball[,] ballGrid;
+
+    public  int width;
+    public int height;
 
     void Awake()
     {
-        width = gridSizeX+1;
-        height = gridSizeY+1;
+        width = gridSizeX +1;
+        height = gridSizeY + 1;
 
         tileGrid = new Tile[width, height];
+        ballGrid = new Ball[width, height];
 
         for (int x = 0; x < width; x++)
         {
@@ -33,13 +35,15 @@ public class TileManager : MonoBehaviour
                 Tile newTile = newTileGO.GetComponent<Tile>();
                 tileGrid[x, y] = newTile;
                 newTile.x = x;
-                newTile.y = y;
+                newTile.y = y;   
             }
         }
     }
 
-        void Start()
+
+    void Start()
     {
+
         for (int i = 0; i <= gridSizeX; i++)
         {
             for (int j = 0; j <= gridSizeY; j++)
@@ -47,9 +51,8 @@ public class TileManager : MonoBehaviour
                 int rand = Random.Range(0, 3);
                 GameObject cellBall = Instantiate(playerPrefab[rand], orginSpawnPoint + new Vector3(i , j, 0), Quaternion.identity);
                 
-                cellBall.GetComponent<CellBall>().row = j;
-                cellBall.GetComponent<CellBall>().row = j;
-                cellBall.GetComponent<CellBall>().column = i; 
+                cellBall.GetComponent<Ball>().row = j;
+                cellBall.GetComponent<Ball>().column = i;
 
             }
         }

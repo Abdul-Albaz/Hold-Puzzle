@@ -1,12 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class GridBasedMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     bool isMoving;
     private Vector3 startPos, targetPos;
     private float timeToMove = 0.15f;
     public TileManager tileManager;
+
+    public GameObject tril;
 
     private Vector3 shootDiriction;
     public Vector3 lastPos;
@@ -26,11 +28,19 @@ public class GridBasedMovement : MonoBehaviour
         playerMat = gameObject.GetComponent<MeshRenderer>();
         playerMat.material = ballColorMaterial[colorIndex];
         gameObject.tag = tags[colorIndex];
+
+        tril.GetComponent<TrailRenderer>().endColor = ballColorMaterial[colorIndex].color;
+        tril.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
+
     }
 
 
     void Update()
     {
+
+        tril.GetComponent<TrailRenderer>().endColor = ballColorMaterial[colorIndex].color;
+        tril.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
+
         if (transform.position.x == -1 && transform.position.y == -1)
         { 
             goUp = true;

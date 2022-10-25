@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5166745656652440329}
   - component: {fileID: 6317651836693715736}
   - component: {fileID: 6695887087672227499}
-  - component: {fileID: 5853640808030263726}
+  - component: {fileID: 415974633123954172}
   m_Layer: 0
   m_Name: "T\u0131le"
   m_TagString: Untagged
@@ -99,7 +99,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &5853640808030263726
+--- !u!114 &415974633123954172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
