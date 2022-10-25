@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Singleton<PlayerMovement>
 {
     bool isMoving;
 
@@ -67,30 +67,32 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetMouseButton(0) && !isMoving)
         {
+            keepMove = false;
+
             switch (direction)
             {
                 case Direction.up:
-                    keepMove = false;
+                   
                     shootDiriction = Vector3.right;
                     StartCoroutine(MovePlayer(Vector3.up));
 
                     break;
 
                 case Direction.down:
-                    keepMove = false;
+                  
                     shootDiriction = Vector3.left;
                     StartCoroutine(MovePlayer(Vector3.down));
 
                     break;
                 case Direction.left:
-                    keepMove = false;
+                    
                     shootDiriction = Vector3.up;
                     StartCoroutine(MovePlayer(Vector3.left));
 
                     break;
 
                 case Direction.right:
-                    keepMove = false;
+                    
                     shootDiriction = Vector3.down;
                     StartCoroutine(MovePlayer(Vector3.right));
 
@@ -169,6 +171,10 @@ public class PlayerMovement : MonoBehaviour
         trail.GetComponent<TrailRenderer>().endColor = ballColorMaterial[colorIndex].color;
         trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
     }
+
+
+
+
 
     private void OnTriggerEnter(Collider other)
     {

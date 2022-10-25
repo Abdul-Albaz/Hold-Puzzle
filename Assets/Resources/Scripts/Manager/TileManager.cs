@@ -38,6 +38,7 @@ public class TileManager : Singleton<TileManager>
                 newTile.y = y;   
             }
         }
+
     }
 
 
@@ -54,6 +55,9 @@ public class TileManager : Singleton<TileManager>
                 cellBall.GetComponent<Ball>().row = j;
                 cellBall.GetComponent<Ball>().column = i;
 
+                ballGrid[j, i] = cellBall.GetComponent<Ball>();
+
+                print(ballGrid[j, i]);
             }
         }
     }
