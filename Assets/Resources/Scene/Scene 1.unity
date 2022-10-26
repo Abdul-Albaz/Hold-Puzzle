@@ -781,8 +781,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847254b8a9ddc49f7a22f8e5c748ee32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSizeX: 8
-  gridSizeY: 8
+  gridSizeX: 4
+  gridSizeY: 4
   playerPrefab: {fileID: 5711490264790301945, guid: f503d75c00fb83b43a6513e46fee1957, type: 3}
   pathTile: {fileID: 3025549648035899985, guid: 2b348c5e0412047788c19c98a445e1e0, type: 3}
   sprites:
@@ -931,14 +931,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201982ce13766d54d8b432a928325f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
   lastPos: {x: 0, y: 0, z: 0}
   trail: {fileID: 1390977586}
   ballColorMaterial:
   - {fileID: 2100000, guid: 788d470732ff9e74e9eca347b60f4e14, type: 2}
   - {fileID: 2100000, guid: 51d41641d9d9369438ac40f9d849aab7, type: 2}
   keepMove: 0
-  targettBall: {fileID: 0}
+  targetBall: {fileID: 0}
 --- !u!58 &1046505976
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1100,7 +1100,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390977586}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.15}
+  m_LocalPosition: {x: 0.019, y: 0.002, z: -0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -52,61 +52,46 @@ public class GridManager : Singleton<GridManager>
         {
             for (int y = 0; y < gridSizeY; y++)
             {
-                //Ball cellBall = Instantiate(playerPrefab, orginSpawnPoint + new Vector3(i , j, 0), Quaternion.identity).GetComponent<Ball>();
-                //Ball cellBall = Instantiate(playerPrefab, tileGrid[x,y].transform).GetComponent<Ball>();
+                Ball cellBall = Instantiate(playerPrefab, tileGrid[x, y].transform).GetComponent<Ball>();
 
-                //int color = Random.Range(0, sprites.Length);
+                int color = Random.Range(0, sprites.Length);
 
-                //cellBall.x = x;
-                //cellBall.y = y;
-                //cellBall.color = color;
+                cellBall.x = x;
+                cellBall.y = y;
+                cellBall.color = color;
 
-                //ballGrid[x, y] = cellBall;
+                ballGrid[x, y] = cellBall;
             }
         }
 
 
     }
 
-    public void GetBallsToDestroy(Ball ball)
-    {
-        //ballsToDestroy.AddRange(ball.ballsToDestroy);
-        ball.FindBallsToDestroy(ball);
-    }
-
     public void CheckBalls(Ball ball)
     {
         ballsToDestroy.Clear();
-        ballsToDestroy.Add(ball);
-        GetBallsToDestroy(ball);
+        FindBallsToDestroy(ball);
     }
 
-    public async void DestroyBalls()
+    public void FindBallsToDestroy(Ball ball)
     {
-        foreach (Ball ballToDestroy in ballsToDestroy)
+        ballsToDestroy.Add(ball);
+
+        foreach (Ball neighbor in ball.neighbors)
         {
-            Destroy(ballToDestroy.gameObject);
-            await Task.Delay(100);
+            if (neighbor.color == ball.color & !ballsToDestroy.Contains(neighbor))
+            {
+                FindBallsToDestroy(neighbor);
+            }
         }
     }
 
-    //private void TryStartMovement(Direction direction)
-    //{
-    //    _Direction = direction;
-
-    //    Tile nextTile = CurrentTile.Neighbours[_Direction];
-
-    //    if (nextTile == null) // if nextTile is null, is means that we are at the edge of the level. Don't move in that direction.
-    //    {
-    //        return;
-    //    }
-    //    else if (nextTile.AccessibilityState == AccessibilityState.Blocked)
-    //    {
-    //        return;
-    //    }
-
-    //    CreateTilePath();
-    //    SetIsMoving(true);
-    //}
+    public void DestroyBalls()
+    {
+        foreach (Ball ball in ballsToDestroy)
+        {
+            ball.Destroy();
+        }
+    }
 
 }

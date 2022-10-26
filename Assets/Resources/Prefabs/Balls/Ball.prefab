@@ -98,15 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73bd1b08ba9a614baf6566511cd424b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags:
-  - redBall
-  - greenBall
-  - blueBall
-  - orangeBall
-  - purpleBall
-  row: 0
-  column: 0
+  x: 0
+  y: 0
   color: 0
+  duration: 100
   ballsToDestroy: []
   neighbors: []
 --- !u!58 &8167077175579654331

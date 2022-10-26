@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -9,6 +10,8 @@ public class Ball : MonoBehaviour
     public int y = 0;
     public int color;
 
+    public int duration;
+
     public List<Ball> ballsToDestroy = new ();
     public List<Ball> neighbors = new ();
 
@@ -16,30 +19,24 @@ public class Ball : MonoBehaviour
     public void Start()
     {
         GetComponent<SpriteRenderer>().sprite = manager.sprites[color];
-        FindNeighborBalls();
+       
+        if (y > 0) neighbors.Add(manager.ballGrid[x, y - 1]);
+
+        if (y < manager.width - 1) neighbors.Add(manager.ballGrid[x, y + 1]);
+
+        if (x > 0) neighbors.Add(manager.ballGrid[x - 1, y]);
+
+        if (x < manager.width - 1) neighbors.Add(manager.ballGrid[x + 1, y]);
     }
 
-    public void FindNeighborBalls()
+    public async void Destroy()
     {
-        if (y > 0) neighbors.Add(manager.ballGrid[y - 1, x]);
+        Vector3 targetPos = PlayerMovement.Instance.targetBall.transform.position;
+        float distance = Vector3.Magnitude(targetPos - transform.position);
 
-        if (y < manager.width - 1) neighbors.Add(manager.ballGrid[y + 1, x]);
+        await Task.Delay((int)distance * duration);
 
-        if (x > 0) neighbors.Add(manager.ballGrid[y, x - 1]);
-
-        if (x < manager.width - 1) neighbors.Add(manager.ballGrid[y, x + 1]);
-    }
-
-    public void FindBallsToDestroy(Ball ball)
-    {
-        foreach(Ball neighbor in ball.neighbors)
-        {
-            if (neighbor.color == color & !manager.ballsToDestroy.Contains(neighbor))
-            {
-                manager.ballsToDestroy.Add(neighbor);
-                FindBallsToDestroy(neighbor);
-            }
-        }
+        Destroy(gameObject);
     }
 
 }
