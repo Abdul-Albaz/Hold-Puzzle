@@ -3,66 +3,43 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public int row = 0;
-    public int column = 0;
-    public Material ballcolor;
-    public List<Ball> ballNeighbors = new List<Ball>();
-    
+    public GridManager manager => GridManager.Instance;
+
+    public int x = 0;
+    public int y = 0;
+    public int color;
+
+    public List<Ball> ballsToDestroy = new ();
+    public List<Ball> neighbors = new ();
+
 
     public void Start()
     {
-        ballcolor = this.GetComponent<Renderer>().material;
-        ballNeighbors = NeighborsBall();
-
-       // CheckNeighborsBall();
+        GetComponent<SpriteRenderer>().sprite = manager.sprites[color];
+        FindNeighborBalls();
     }
 
-
-    public List<Ball> NeighborsBall()
+    public void FindNeighborBalls()
     {
-        List<Ball> temp = new();
+        if (y > 0) neighbors.Add(manager.ballGrid[y - 1, x]);
 
-        if (row > 0) temp.Add(TileManager.Instance.ballGrid[row - 1, column]);
+        if (y < manager.width - 1) neighbors.Add(manager.ballGrid[y + 1, x]);
 
-        if (row < TileManager.Instance.width - 1) temp.Add(TileManager.Instance.ballGrid[row + 1, column]);
+        if (x > 0) neighbors.Add(manager.ballGrid[y, x - 1]);
 
-        if (column > 0) temp.Add(TileManager.Instance.ballGrid[row, column - 1]);
-
-        if (column < TileManager.Instance.width - 1) temp.Add(TileManager.Instance.ballGrid[row, column + 1]);
-
-        return temp;
+        if (x < manager.width - 1) neighbors.Add(manager.ballGrid[y, x + 1]);
     }
 
-
-    //void CheckNeighborsBall()
-    //{
-    //    for (int i = 0; i < ballNeighbors.Count; i++)
-    //    {
-    //        if (ballNeighbors[i].GetComponent<Material>().color == this.GetComponent<Material>().color)
-    //        {
-    //            print("work");
-    //        }
-    //    }
-    //}
-
-
-
-    // use this lines of code for matching balls
-
-    private void OnTriggerStay(Collider other)
+    public void FindBallsToDestroy(Ball ball)
     {
-
-        if (other.tag == gameObject.tag && other.name != "player")
+        foreach(Ball neighbor in ball.neighbors)
         {
-            int r = other.GetComponent<Ball>().row;
-            int c = other.GetComponent<Ball>().column;
-
-            if ((column == c && r <= (row + 1)) || ((row == r && c <= (column + 1))))
+            if (neighbor.color == color & !manager.ballsToDestroy.Contains(neighbor))
             {
-                other.transform.parent = gameObject.transform;
+                manager.ballsToDestroy.Add(neighbor);
+                FindBallsToDestroy(neighbor);
             }
-
-
         }
     }
+
 }

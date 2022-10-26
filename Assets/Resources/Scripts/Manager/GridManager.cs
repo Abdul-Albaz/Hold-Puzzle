@@ -1,18 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
-
-public class TileManager : Singleton<TileManager>
+public class GridManager : Singleton<GridManager>
 {
     public int gridSizeX;
     public int gridSizeY;
 
-    public GameObject[] playerPrefab;
+    public GameObject playerPrefab;
     public GameObject pathTile;
+    public Sprite[] sprites;
 
     public GameObject[] walls;
-    
+
+    public List<Ball> ballsToDestroy = new List<Ball>();
+
     public Vector3 orginSpawnPoint;
 
     public Tile[,] tileGrid;
@@ -23,8 +25,8 @@ public class TileManager : Singleton<TileManager>
 
     void Awake()
     {
-        width = gridSizeX +1;
-        height = gridSizeY + 1;
+        width = gridSizeX;
+        height = gridSizeY;
 
         tileGrid = new Tile[width, height];
         ballGrid = new Ball[width, height];
@@ -34,6 +36,7 @@ public class TileManager : Singleton<TileManager>
             for (int y = 0; y < height; y++)
             {
                 GameObject newTileGO = Instantiate(pathTile, orginSpawnPoint + new Vector3(x, y, 0), Quaternion.identity);
+                newTileGO.transform.parent = transform; 
                 Tile newTile = newTileGO.GetComponent<Tile>();
                 tileGrid[x, y] = newTile;
                 newTile.x = x;
@@ -45,29 +48,47 @@ public class TileManager : Singleton<TileManager>
     void Start()
     {
 
-        for (int i = 0; i <= gridSizeX; i++)
+        for (int x = 0; x < gridSizeX; x++)
         {
-            for (int j = 0; j <= gridSizeY; j++)
+            for (int y = 0; y < gridSizeY; y++)
             {
-                int rand = Random.Range(0, 3);
-                GameObject cellBall = Instantiate(playerPrefab[rand], orginSpawnPoint + new Vector3(i , j, 0), Quaternion.identity);
-                
-                cellBall.GetComponent<Ball>().row = j;
-                cellBall.GetComponent<Ball>().column = i;
+                //Ball cellBall = Instantiate(playerPrefab, orginSpawnPoint + new Vector3(i , j, 0), Quaternion.identity).GetComponent<Ball>();
+                //Ball cellBall = Instantiate(playerPrefab, tileGrid[x,y].transform).GetComponent<Ball>();
 
-                ballGrid[j, i] = cellBall.GetComponent<Ball>();
+                //int color = Random.Range(0, sprites.Length);
 
-                print(ballGrid[j, i]);
+                //cellBall.x = x;
+                //cellBall.y = y;
+                //cellBall.color = color;
+
+                //ballGrid[x, y] = cellBall;
             }
         }
 
 
-        //Instantiate(walls[0], new Vector3(-2f, PlayerMovement.Instance.tileManager.gridSizeY-4f, 0f), Quaternion.identity);
-        //Instantiate(walls[1], new Vector3(PlayerMovement.Instance.tileManager.gridSizeX - 1f ,- 4f , 0f), Quaternion.AxisAngle(Vector3.zero,90));
-        //Instantiate(walls[2], new Vector3(PlayerMovement.Instance.tileManager.gridSizeX + 1, PlayerMovement.Instance.tileManager.gridSizeX + 1, 0f), Quaternion.identity);
-        //Instantiate(walls[2], new Vector3(PlayerMovement.Instance.tileManager.gridSizeX + 1, PlayerMovement.Instance.tileManager.gridSizeX -1 , 0f), Quaternion.identity);
     }
 
+    public void GetBallsToDestroy(Ball ball)
+    {
+        //ballsToDestroy.AddRange(ball.ballsToDestroy);
+        ball.FindBallsToDestroy(ball);
+    }
+
+    public void CheckBalls(Ball ball)
+    {
+        ballsToDestroy.Clear();
+        ballsToDestroy.Add(ball);
+        GetBallsToDestroy(ball);
+    }
+
+    public async void DestroyBalls()
+    {
+        foreach (Ball ballToDestroy in ballsToDestroy)
+        {
+            Destroy(ballToDestroy.gameObject);
+            await Task.Delay(100);
+        }
+    }
 
     //private void TryStartMovement(Direction direction)
     //{

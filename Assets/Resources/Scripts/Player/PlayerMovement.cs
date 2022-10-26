@@ -1,159 +1,208 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerMovement : Singleton<PlayerMovement>
 {
     bool isMoving;
 
     private Vector3 startPos, targetPos;
+    private Direction shootDirection;
     private float timeToMove = 0.15f;
-    private Vector3 shootDiriction;
+    [SerializeField] private float speed = 0.5f;
 
-    public TileManager tileManager;
-    public GameObject trail;
+    public GridManager manager => GridManager.Instance;
+
     public Vector3 lastPos;
-    public bool keepMove;
+
+    public GameObject trail;
     public Material[] ballColorMaterial;
-    public string[] tags;
+
+    public bool keepMove;
 
     Direction direction;
-    MeshRenderer playerMat;
-    int colorIndex;
+    SpriteRenderer renderer;
+    public Ball targettBall;
+    int color;
+
+
 
 
     void Start()
     {
         direction = Direction.up;
-        colorIndex = Random.Range(0, 3);
-        playerMat = gameObject.GetComponent<MeshRenderer>();
-        playerMat.material = ballColorMaterial[colorIndex];
-        gameObject.tag = tags[colorIndex];
+        color = Random.Range(0, 3);
+        renderer = gameObject.GetComponent<SpriteRenderer>();
+        renderer.sprite= manager.sprites[color];
 
-        trail.GetComponent<TrailRenderer>().endColor = ballColorMaterial[colorIndex].color;
-        trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
+        trail.GetComponent<TrailRenderer>().endColor = ballColorMaterial[color].color;
+        trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[color].color;
     }
 
     void Update()
     {
-        CheckInput();
-    }
+        if (transform.position.x == -1 && transform.position.y < manager.gridSizeY) direction = Direction.up;
+        else if (transform.position.x > -1 && transform.position.y == (manager.gridSizeY)) direction = Direction.right;
+        else if (transform.position.x == (manager.gridSizeX) && transform.position.y > 0) direction = Direction.down;
+        else if (transform.position.x > -1 && transform.position.y == -1) direction = Direction.left;
 
-    void CheckInput()
-    {
-        if (transform.position.x == -1 && transform.position.y == -1) direction = Direction.up;
-        if (transform.position.x == -1 && transform.position.y == (tileManager.gridSizeY + 1)) direction = Direction.right;
-        if (transform.position.x == (tileManager.gridSizeX + 1) && transform.position.y == (tileManager.gridSizeY + 1)) direction = Direction.down;
-        if (transform.position.x == (tileManager.gridSizeX + 1) && transform.position.y == -1) direction = Direction.left;
+        if (isMoving) return;
 
-
-        if (Input.GetMouseButton(0) && !isMoving)
+        if (Input.GetMouseButton(0))
         {
             keepMove = false;
+            MovePlayer(direction);
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (transform.position.x == -1 && transform.position.y == -1) return;
+            else if (transform.position.x == -1 && transform.position.y == manager.gridSizeY) return;
+            else if (transform.position.x == manager.gridSizeX && transform.position.y == -1) return;
+            else if (transform.position.x == manager.gridSizeX && transform.position.y == manager.gridSizeY) return;
+
+            lastPos = transform.position;
+            keepMove = true;
+
+            shootDirection = direction == Direction.up ? Direction.right : direction == Direction.right ? Direction.down : direction == Direction.left ? Direction.up : Direction.left;
+            ShootPlayer();
+        }
+    }
+
+    private void MovePlayer(Direction direction)
+    {
+        Vector3 moveDirection = direction == Direction.up ? Vector3.up : direction == Direction.right ? Vector3.right : direction == Direction.down ? Vector3.down : Vector3.left;
+        isMoving = true;
+        startPos = transform.position;
+        targetPos = startPos + moveDirection;
+        float distance = Vector3.Magnitude(targetPos - startPos);
+
+        transform.DOMove(targetPos, distance / speed).SetEase(Ease.Linear).OnComplete(() => isMoving = false);
+
+    }
+
+    private void ShootPlayer()
+    {
+        if (isMoving) return;
+        isMoving = true;
+        startPos = transform.position;
+
+        Vector3 shootDirVector = shootDirection == Direction.up ? Vector3.up : shootDirection == Direction.right ? Vector3.right : shootDirection == Direction.down ? Vector3.down : Vector3.left;
+
+        Ball targetBall = GetTargetBall();
+        targettBall = targetBall;
+        //print("playerPos: " + transform.position + " - player color: " + color + " - target Pos: " + targetBall.x + " - " + targetBall.y + " - targetColor: " + targetBall.color);
+
+        if (targetBall == null)
+        {
+            transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).OnComplete(() =>
+            {
+                keepMove = false;
+                isMoving = false;
+            });
+            print("empty row or col");
+            return;
+        }
+
+        if (targetBall.color != color)
+        {
+            isMoving = false;
+            print("not the same color");
+            return;
+        }
+
+        Ball distantBall = targetBall;
+        manager.CheckBalls(targetBall);
+
+        foreach(Ball ball in manager.ballsToDestroy)
+        {
             switch (direction)
             {
-                case Direction.up:shootDiriction = Vector3.right;
-                    StartCoroutine(MovePlayer(Vector3.up));break;
-
-                case Direction.down:shootDiriction = Vector3.left;
-                    StartCoroutine(MovePlayer(Vector3.down));break;
-
-                case Direction.left:shootDiriction = Vector3.up;
-                    StartCoroutine(MovePlayer(Vector3.left));break;
-
-                case Direction.right:shootDiriction = Vector3.down;
-                    StartCoroutine(MovePlayer(Vector3.right)); break;
-
-                default:
+                case Direction.up:
+                    if (ball.x == distantBall.x & ball.y > distantBall.y) distantBall = ball;
+                    break;
+                case Direction.right:
+                    if (ball.x > distantBall.x & ball.y == distantBall.y) distantBall = ball;
+                    break;
+                case Direction.down:
+                    if (ball.x == distantBall.x & ball.y < distantBall.y) distantBall = ball;
+                    break;
+                case Direction.left:
+                    if (ball.x < distantBall.x & ball.y == distantBall.y) distantBall = ball;
                     break;
             }
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && !isMoving)
+        //manager.DestroyBalls();
+
+        print("ball should move to: " + distantBall.transform.position + " color " + distantBall.color);
+
+        float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
+
+        transform.DOMove(distantBall.transform.position, distance / speed).SetEase(Ease.OutBack).OnComplete(() =>
         {
-            lastPos = transform.position;
-            keepMove = true;
-            StartCoroutine(callMovePlayer());
-        }
+            transform.DOMove(startPos, distance / speed).SetEase(Ease.OutBack).OnComplete(() =>
+            {
+                isMoving = false;
+                changeColor();
+            });
+        });
+
     }
 
-    private IEnumerator MovePlayer(Vector3 direction)
-    {  
-        isMoving = true;
-        float elapsedtime = 0;
-        startPos = transform.position;
-        targetPos = startPos + direction;
-
-        while (elapsedtime < timeToMove)
-        {
-          transform.position =   Vector3.Lerp(startPos, targetPos, (elapsedtime / timeToMove));
-          elapsedtime += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = targetPos;
-        isMoving = false;
-    }
-
-    private IEnumerator ShootPlayer(Vector3 direction)
+    private Ball GetTargetBall()
     {
-        isMoving = true;
-        float elapsedtime = 0;
-        startPos = transform.position;
-        targetPos = startPos + direction;
-
-        while (elapsedtime < timeToMove && keepMove == true)
+        
+        switch (shootDirection)
         {
-            transform.position = Vector3.Lerp(startPos, targetPos, (elapsedtime / timeToMove) *2);
-            elapsedtime += Time.deltaTime;
-            yield return null;
+            case Direction.up:
+                for(int y = 0; y < manager.gridSizeY; y++)
+                {
+                    Ball ball = manager.ballGrid[(int)transform.position.x, y];
+                    if (ball != null) return ball;
+                }
+                break;
+            case Direction.right:
+                for (int x = 0; x < manager.gridSizeX; x++)
+                {
+                    Ball ball = manager.ballGrid[x, (int)transform.position.y];
+                    if (ball != null) return ball;
+                }
+                break;
+            case Direction.down:
+                for (int y = manager.gridSizeY - 1; y >= 0; y--)
+                {
+                    Ball ball = manager.ballGrid[(int)transform.position.x, y];
+                    if (ball != null) return ball;
+                }
+                break;
+            case Direction.left:
+                for (int x = manager.gridSizeX - 1; x >=0; x--)
+                {
+                    Ball ball = manager.ballGrid[x, (int)transform.position.y];
+                    if (ball != null) return ball;
+                }
+                break;
         }
-        isMoving = false;
+
+        return null;
     }
 
-    private IEnumerator callMovePlayer()
+
+    private async void changeColor()
     {
-        while (keepMove == true)
-        {
-            StartCoroutine(ShootPlayer(shootDiriction));
-            yield return null;
-        }
+        color = Random.Range(0, manager.sprites.Length);
+        await Task.Delay(500);
+
+        renderer.sprite = manager.sprites[color];
+        trail.GetComponent<TrailRenderer>().endColor = ballColorMaterial[color].color;
+        trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[color].color;
     }
 
-    private IEnumerator changeColor()
+    private void HandleCollision(Ball ball)
     {
-        colorIndex = Random.Range(0, 3);
-        yield return new WaitForSeconds(0.8f);
-        playerMat.material = ballColorMaterial[colorIndex];
-        gameObject.tag = tags[colorIndex];
-        trail.GetComponent<TrailRenderer>().endColor = ballColorMaterial[colorIndex].color;
-        trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
+        //changeColor();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(other.name);
-
-        if (other.tag == "wall")
-        {
-            Debug.Log("DIFFRENT");
-            keepMove = false;
-            transform.position = transform.position;
-            transform.position = lastPos;
-        }
-
-        else if (other.tag != gameObject.tag)
-        {  
-            Debug.Log("DIFFRENT");
-            keepMove = false;
-            transform.position = lastPos;
-        }
-
-        else  if (other.tag == gameObject.tag)
-        {
-            StartCoroutine(changeColor());
-            
-            if (other.transform.parent != null) Destroy(other.transform.parent.gameObject);  
-            else Destroy(other.gameObject);
-        }
-    }
 }
