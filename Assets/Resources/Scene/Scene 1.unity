@@ -788,6 +788,7 @@ MonoBehaviour:
   - {fileID: 5384864295756762478, guid: 1c5ac421819c040438da2e3af7b15d43, type: 3}
   - {fileID: 9092033760653209051, guid: 76514fd8da304694eb12eb69761991c8, type: 3}
   pathTile: {fileID: 3025549648035899985, guid: 2b348c5e0412047788c19c98a445e1e0, type: 3}
+  walls: []
   orginSpawnPoint: {x: 0, y: 0, z: 0}
   width: 0
   height: 0

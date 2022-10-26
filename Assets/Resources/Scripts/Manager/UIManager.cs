@@ -7,7 +7,6 @@ public class UIManager : MonoBehaviour
 {
     public GameObject handIcon;
 
-
     void Start()
     {
         handIcon.transform.DOLocalMoveY(-1050f, 1.3f).SetEase(Ease.InOutBack);
@@ -15,9 +14,6 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButton(0))
-        handIcon.transform.DOLocalMoveY(-2478.317f, 1.2f).SetEase(Ease.OutBack);
+        if(Input.GetMouseButton(0)) handIcon.transform.DOLocalMoveY(-2478.317f, 1.2f).SetEase(Ease.OutBack);
     }
-
-
 }

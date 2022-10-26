@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - blueBall
+  - greenBall
+  - redBall
+  - wall
   layers:
   - Default
   - TransparentFX

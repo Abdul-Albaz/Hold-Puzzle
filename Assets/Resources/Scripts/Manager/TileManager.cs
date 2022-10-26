@@ -10,6 +10,8 @@ public class TileManager : Singleton<TileManager>
 
     public GameObject[] playerPrefab;
     public GameObject pathTile;
+
+    public GameObject[] walls;
     
     public Vector3 orginSpawnPoint;
 
@@ -38,9 +40,7 @@ public class TileManager : Singleton<TileManager>
                 newTile.y = y;   
             }
         }
-
     }
-
 
     void Start()
     {
@@ -60,6 +60,12 @@ public class TileManager : Singleton<TileManager>
                 print(ballGrid[j, i]);
             }
         }
+
+
+        //Instantiate(walls[0], new Vector3(-2f, PlayerMovement.Instance.tileManager.gridSizeY-4f, 0f), Quaternion.identity);
+        //Instantiate(walls[1], new Vector3(PlayerMovement.Instance.tileManager.gridSizeX - 1f ,- 4f , 0f), Quaternion.AxisAngle(Vector3.zero,90));
+        //Instantiate(walls[2], new Vector3(PlayerMovement.Instance.tileManager.gridSizeX + 1, PlayerMovement.Instance.tileManager.gridSizeX + 1, 0f), Quaternion.identity);
+        //Instantiate(walls[2], new Vector3(PlayerMovement.Instance.tileManager.gridSizeX + 1, PlayerMovement.Instance.tileManager.gridSizeX -1 , 0f), Quaternion.identity);
     }
 
 

@@ -31,9 +31,6 @@ public class Ball : MonoBehaviour
         if (column < TileManager.Instance.width - 1) temp.Add(TileManager.Instance.ballGrid[row, column + 1]);
 
         return temp;
-
-
-        
     }
 
 

@@ -16,7 +16,6 @@ public class PlayerMovement : Singleton<PlayerMovement>
     public Material[] ballColorMaterial;
     public string[] tags;
 
-
     Direction direction;
     MeshRenderer playerMat;
     int colorIndex;
@@ -34,82 +33,45 @@ public class PlayerMovement : Singleton<PlayerMovement>
         trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         CheckInput();
     }
 
-
     void CheckInput()
     {
-        if (transform.position.x == -1 && transform.position.y == -1)
-        {
-            direction = Direction.up;
-        }
-
-        if (transform.position.x == -1 && transform.position.y == (tileManager.gridSizeY + 1))
-        {
-            direction = Direction.right;
-        }
-
-        if (transform.position.x == (tileManager.gridSizeX + 1) && transform.position.y == (tileManager.gridSizeY + 1))
-        {
-            direction = Direction.down;
-        }
-
-
-        if (transform.position.x == (tileManager.gridSizeX + 1) && transform.position.y == -1)
-        {
-            direction = Direction.left;
-        }
-
+        if (transform.position.x == -1 && transform.position.y == -1) direction = Direction.up;
+        if (transform.position.x == -1 && transform.position.y == (tileManager.gridSizeY + 1)) direction = Direction.right;
+        if (transform.position.x == (tileManager.gridSizeX + 1) && transform.position.y == (tileManager.gridSizeY + 1)) direction = Direction.down;
+        if (transform.position.x == (tileManager.gridSizeX + 1) && transform.position.y == -1) direction = Direction.left;
 
 
         if (Input.GetMouseButton(0) && !isMoving)
         {
             keepMove = false;
-
             switch (direction)
             {
-                case Direction.up:
-                   
-                    shootDiriction = Vector3.right;
-                    StartCoroutine(MovePlayer(Vector3.up));
+                case Direction.up:shootDiriction = Vector3.right;
+                    StartCoroutine(MovePlayer(Vector3.up));break;
 
-                    break;
+                case Direction.down:shootDiriction = Vector3.left;
+                    StartCoroutine(MovePlayer(Vector3.down));break;
 
-                case Direction.down:
-                  
-                    shootDiriction = Vector3.left;
-                    StartCoroutine(MovePlayer(Vector3.down));
+                case Direction.left:shootDiriction = Vector3.up;
+                    StartCoroutine(MovePlayer(Vector3.left));break;
 
-                    break;
-                case Direction.left:
-                    
-                    shootDiriction = Vector3.up;
-                    StartCoroutine(MovePlayer(Vector3.left));
-
-                    break;
-
-                case Direction.right:
-                    
-                    shootDiriction = Vector3.down;
-                    StartCoroutine(MovePlayer(Vector3.right));
-
-                    break;
+                case Direction.right:shootDiriction = Vector3.down;
+                    StartCoroutine(MovePlayer(Vector3.right)); break;
 
                 default:
                     break;
             }
         }
 
-
-
         if (Input.GetKey(KeyCode.LeftShift) && !isMoving)
         {
             lastPos = transform.position;
             keepMove = true;
-
             StartCoroutine(callMovePlayer());
         }
     }
@@ -123,7 +85,6 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
         while (elapsedtime < timeToMove)
         {
-           
           transform.position =   Vector3.Lerp(startPos, targetPos, (elapsedtime / timeToMove));
           elapsedtime += Time.deltaTime;
             yield return null;
@@ -146,7 +107,6 @@ public class PlayerMovement : Singleton<PlayerMovement>
             elapsedtime += Time.deltaTime;
             yield return null;
         }
-
         isMoving = false;
     }
 
@@ -163,23 +123,25 @@ public class PlayerMovement : Singleton<PlayerMovement>
     {
         colorIndex = Random.Range(0, 3);
         yield return new WaitForSeconds(0.8f);
-        
         playerMat.material = ballColorMaterial[colorIndex];
         gameObject.tag = tags[colorIndex];
-
-
         trail.GetComponent<TrailRenderer>().endColor = ballColorMaterial[colorIndex].color;
         trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[colorIndex].color;
     }
 
-
-
-
-
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.name);
-        if (other.tag != gameObject.tag)
+
+        if (other.tag == "wall")
+        {
+            Debug.Log("DIFFRENT");
+            keepMove = false;
+            transform.position = transform.position;
+            transform.position = lastPos;
+        }
+
+        else if (other.tag != gameObject.tag)
         {  
             Debug.Log("DIFFRENT");
             keepMove = false;
@@ -190,14 +152,8 @@ public class PlayerMovement : Singleton<PlayerMovement>
         {
             StartCoroutine(changeColor());
             
-            if (other.transform.parent != null)
-            {
-                Destroy(other.transform.parent.gameObject);
-            }
-            else
-            {
-                Destroy(other.gameObject);
-            }
+            if (other.transform.parent != null) Destroy(other.transform.parent.gameObject);  
+            else Destroy(other.gameObject);
         }
     }
 }
