@@ -11,9 +11,10 @@ public class Tile : MonoBehaviour
     void Start()
     {
         neighbors = new List<Tile>();
-        if (x > 0) neighbors.Add(TileManager.tileGrid[x - 1, y]);
-        if (x < TileManager.width - 1) neighbors.Add(TileManager.tileGrid[x, x + 1]);
-        if (y > 0) neighbors.Add(TileManager.tileGrid[x, y - 1]);
-        if (y < TileManager.width - 1) neighbors.Add(TileManager.tileGrid[x, y + 1]);
+
+        if (x > 0) neighbors.Add(GridManager.Instance.tileGrid[x - 1, y]);
+        if (x < GridManager.Instance.width - 1) neighbors.Add(GridManager.Instance.tileGrid[x + 1, y]);
+        if (y > 0) neighbors.Add(GridManager.Instance.tileGrid[x, y - 1]);
+        if (y < GridManager.Instance.width - 1) neighbors.Add(GridManager.Instance.tileGrid[x, y + 1]); 
     }
 }
