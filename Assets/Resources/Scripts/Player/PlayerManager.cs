@@ -28,6 +28,8 @@ public class PlayerManager : Singleton<PlayerManager>
 
     void Start()
     {
+
+        
         direction = Direction.up;
         color = Random.Range(0, manager.sprites.Length);
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -76,7 +78,6 @@ public class PlayerManager : Singleton<PlayerManager>
         float distance = Vector3.Magnitude(targetPos - startPos);
 
         transform.DOMove(targetPos, distance / speed).SetEase(Ease.Linear).OnComplete(() => isMoving = false);
-
     }
 
     private void ShootPlayer()
@@ -157,6 +158,7 @@ public class PlayerManager : Singleton<PlayerManager>
                     if (ball != null) return ball;
                 }
                 break;
+
             case Direction.right:
                 for (int x = 0; x < manager.gridSizeX; x++)
                 {
@@ -164,6 +166,7 @@ public class PlayerManager : Singleton<PlayerManager>
                     if (ball != null) return ball;
                 }
                 break;
+
             case Direction.down:
                 for (int y = manager.gridSizeY - 1; y >= 0; y--)
                 {
@@ -171,6 +174,7 @@ public class PlayerManager : Singleton<PlayerManager>
                     if (ball != null) return ball;
                 }
                 break;
+
             case Direction.left:
                 for (int x = manager.gridSizeX - 1; x >=0; x--)
                 {

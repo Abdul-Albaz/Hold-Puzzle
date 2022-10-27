@@ -104,6 +104,9 @@ MonoBehaviour:
   duration: 100
   ballsToDestroy: []
   neighbors: []
+  explosionParticle: {fileID: 153674, guid: 05ed38dc544db48c29c22e3bf2a9bd11, type: 3}
+  splatterParticle: {fileID: 286697769406427581, guid: 617378de28fbaa64c96485d5b0d9169b, type: 3}
+  ringParticle: {fileID: 163286, guid: 748acba4d669a3d428ab650f3763a5ab, type: 3}
 --- !u!58 &8167077175579654331
 CircleCollider2D:
   m_ObjectHideFlags: 0

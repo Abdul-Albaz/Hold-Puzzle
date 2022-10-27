@@ -8,10 +8,11 @@ public class GridManager : Singleton<GridManager>
     public int gridSizeY;
 
     public GameObject playerPrefab;
-    public GameObject pathTile;
+    public GameObject tilePrefab;
     public Sprite[] sprites;
 
-    public GameObject[] walls;
+    [SerializeField]
+    public Color[] colorIndex;
 
     public List<Ball> ballsToDestroy = new List<Ball>();
 
@@ -25,6 +26,8 @@ public class GridManager : Singleton<GridManager>
 
     void Awake()
     {
+
+        
         width = gridSizeX;
         height = gridSizeY;
 
@@ -35,7 +38,7 @@ public class GridManager : Singleton<GridManager>
         {
             for (int y = 0; y < height; y++)
             {
-                GameObject newTileGO = Instantiate(pathTile, orginSpawnPoint + new Vector3(x, y, 0), Quaternion.identity);
+                GameObject newTileGO = Instantiate(tilePrefab, orginSpawnPoint + new Vector3(x, y, 0), Quaternion.identity);
                 newTileGO.transform.parent = transform; 
                 Tile newTile = newTileGO.GetComponent<Tile>();
                 tileGrid[x, y] = newTile;

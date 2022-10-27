@@ -12,12 +12,21 @@ public class Ball : MonoBehaviour
 
     public int duration;
 
+
+
     public List<Ball> ballsToDestroy = new ();
     public List<Ball> neighbors = new ();
 
 
+
+    public GameObject explosionParticle;
+    public GameObject splatterParticle;
+    public GameObject ringParticle;
+
+
     public void Start()
     {
+        
         GetComponent<SpriteRenderer>().sprite = manager.sprites[color];
        
         if (y > 0) neighbors.Add(manager.ballGrid[x, y - 1]);
@@ -35,6 +44,24 @@ public class Ball : MonoBehaviour
         float distance = Vector3.Magnitude(targetPos - transform.position);
 
         await Task.Delay((int)distance * duration);
+
+
+        // ParticleSystem
+
+        ParticleSystem splatter = Instantiate(splatterParticle, transform.parent).GetComponent<ParticleSystem>();
+
+        var mainColor = splatter.main;
+        mainColor.startColor = GridManager.Instance.colorIndex[color];
+
+        ParticleSystem ring = Instantiate(ringParticle, transform.parent).GetComponent<ParticleSystem>();
+
+   
+        var ringColor = ring.main;
+        ringColor.startColor = GridManager.Instance.colorIndex[color];
+
+        ParticleSystemRenderer particle = Instantiate(explosionParticle, transform.parent).GetComponent<ParticleSystemRenderer>();
+
+        particle.material.color = GridManager.Instance.colorIndex[color];
 
         Destroy(gameObject);
     }
