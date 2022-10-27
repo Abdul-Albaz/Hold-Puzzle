@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using DG.Tweening;
 
-public class PlayerMovement : Singleton<PlayerMovement>
+public class PlayerManager : Singleton<PlayerManager>
 {
     bool isMoving;
 

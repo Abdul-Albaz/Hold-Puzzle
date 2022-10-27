@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4439403, g: 0.4931519, b: 0.5722083, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -174,7 +174,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 83
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -781,8 +781,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847254b8a9ddc49f7a22f8e5c748ee32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSizeX: 4
-  gridSizeY: 4
+  gridSizeX: 8
+  gridSizeY: 8
   playerPrefab: {fileID: 5711490264790301945, guid: f503d75c00fb83b43a6513e46fee1957, type: 3}
   pathTile: {fileID: 3025549648035899985, guid: 2b348c5e0412047788c19c98a445e1e0, type: 3}
   sprites:
@@ -1037,7 +1037,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
