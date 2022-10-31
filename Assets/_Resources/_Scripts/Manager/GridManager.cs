@@ -29,7 +29,6 @@ public class GridManager : Singleton<GridManager>
     void Awake()
     {
 
-        
         width = gridSizeX;
         height = gridSizeY;
 
@@ -41,8 +40,7 @@ public class GridManager : Singleton<GridManager>
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
-            {
-                
+            {               
                 GameObject newTileGO = Instantiate(tilePrefab, orginSpawnPoint + new Vector3(x, y, 0), Quaternion.identity);
                 newTileGO.transform.parent = transform; 
                 Tile newTile = newTileGO.GetComponent<Tile>();

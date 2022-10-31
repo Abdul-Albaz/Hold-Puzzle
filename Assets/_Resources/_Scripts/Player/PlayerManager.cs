@@ -7,7 +7,7 @@ public class PlayerManager : Singleton<PlayerManager>
 {
     bool isMoving;
 
-    private Vector3 startPos, targetPos;
+    public Vector3 startPos, targetPos;
     private Direction shootDirection;
     private float timeToMove = 0.2f;
     [SerializeField] private float speed = 5;
@@ -93,6 +93,7 @@ public class PlayerManager : Singleton<PlayerManager>
         startPos = transform.position;
         targetPos = startPos + moveDirection;
         float distance = Vector3.Magnitude(targetPos - startPos);
+
 
         transform.DOMove(targetPos, distance / speed).SetEase(Ease.Linear).OnComplete(() => isMoving = false);
     }
