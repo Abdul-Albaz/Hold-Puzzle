@@ -7,11 +7,11 @@ public class GridManager : Singleton<GridManager>
     public int gridSizeX;
     public int gridSizeY;
 
-
     public GameObject playerPrefab;
     public GameObject ballPrefab;
     public GameObject tilePrefab;
     public Sprite[] sprites;
+   
 
     [SerializeField]
     public Color[] colorIndex;
@@ -28,7 +28,6 @@ public class GridManager : Singleton<GridManager>
 
     void Awake()
     {
-
         width = gridSizeX;
         height = gridSizeY;
 
@@ -53,7 +52,6 @@ public class GridManager : Singleton<GridManager>
 
     void Start()
     {
-
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = 0; y < gridSizeY; y++)

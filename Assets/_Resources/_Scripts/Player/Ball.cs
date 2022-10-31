@@ -55,6 +55,7 @@ public class Ball : MonoBehaviour
         ParticleSystemRenderer particle = Instantiate(explosionParticle, transform.parent).GetComponent<ParticleSystemRenderer>();
         particle.material.color = GridManager.Instance.colorIndex[color];
 
+        
         Destroy(gameObject);
     }
 
