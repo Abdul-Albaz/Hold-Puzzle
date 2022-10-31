@@ -7,7 +7,9 @@ public class GridManager : Singleton<GridManager>
     public int gridSizeX;
     public int gridSizeY;
 
+
     public GameObject playerPrefab;
+    public GameObject ballPrefab;
     public GameObject tilePrefab;
     public Sprite[] sprites;
 
@@ -34,10 +36,13 @@ public class GridManager : Singleton<GridManager>
         tileGrid = new Tile[width, height];
         ballGrid = new Ball[width, height];
 
+        GameObject playerObject = Instantiate(playerPrefab, orginSpawnPoint + new Vector3(-1, -1, 0), Quaternion.identity);
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
+                
                 GameObject newTileGO = Instantiate(tilePrefab, orginSpawnPoint + new Vector3(x, y, 0), Quaternion.identity);
                 newTileGO.transform.parent = transform; 
                 Tile newTile = newTileGO.GetComponent<Tile>();
@@ -55,7 +60,7 @@ public class GridManager : Singleton<GridManager>
         {
             for (int y = 0; y < gridSizeY; y++)
             {
-                Ball cellBall = Instantiate(playerPrefab, tileGrid[x, y].transform).GetComponent<Ball>();
+                Ball cellBall = Instantiate(ballPrefab, tileGrid[x, y].transform).GetComponent<Ball>();
 
                 int color = Random.Range(0, sprites.Length);
 
@@ -66,8 +71,6 @@ public class GridManager : Singleton<GridManager>
                 ballGrid[x, y] = cellBall;
             }
         }
-
-
     }
 
     public void CheckBalls(Ball ball)

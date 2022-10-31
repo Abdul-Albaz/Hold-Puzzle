@@ -12,8 +12,6 @@ public class Ball : MonoBehaviour
 
     public int duration;
 
-
-
     public List<Ball> ballsToDestroy = new ();
     public List<Ball> neighbors = new ();
 

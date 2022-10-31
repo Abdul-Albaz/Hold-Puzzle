@@ -9,16 +9,12 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private Vector3 startPos, targetPos;
     private Direction shootDirection;
-    private float timeToMove = 0.15f;
+    private float timeToMove = 0.2f;
     [SerializeField] private float speed = 5;
 
     public GridManager manager => GridManager.Instance;
-
     public Vector3 lastPos;
-
     public GameObject trail;
-    public Material[] ballColorMaterial;
-
     public bool keepMove;
 
     Direction direction;
@@ -28,15 +24,34 @@ public class PlayerManager : Singleton<PlayerManager>
 
     void Start()
     {
-
-        
         direction = Direction.up;
         color = Random.Range(0, manager.sprites.Length);
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite= manager.sprites[color];
 
-        trail.GetComponent<TrailRenderer>().endColor = ballColorMaterial[color].color;
-        trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[color].color;
+        switch (spriteRenderer.sprite.name)
+        {
+            case "red":
+                color = 0;
+                break;
+            case "green":
+                color = 1;
+                break;
+            case "orange":
+                color = 2;
+                break;
+            case "purple":
+                color = 3;
+                break;
+            case "blue":
+                color = 4;
+                break;
+        }
+        
+        Debug.Log("spriteRenderer.name " + spriteRenderer.name);
+
+        trail.GetComponent<TrailRenderer>().endColor = GridManager.Instance.colorIndex[color];
+        trail.GetComponent<TrailRenderer>().startColor = GridManager.Instance.colorIndex[color];
     }
 
     void Update()
@@ -67,6 +82,8 @@ public class PlayerManager : Singleton<PlayerManager>
             shootDirection = direction == Direction.up ? Direction.right : direction == Direction.right ? Direction.down : direction == Direction.left ? Direction.up : Direction.left;
             ShootPlayer();
         }
+
+        
     }
 
     private void MovePlayer(Direction direction)
@@ -103,16 +120,30 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (targetBall.color != color)
         {
-            isMoving = false;
-            return;
+
+            float distance = Vector3.Magnitude(targetBall.transform.position - startPos);
+
+            transform.DOMove(targetBall.transform.position, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                transform.DOMove(startPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+                {
+                    isMoving = false;
+                    changeColor();
+                });
+            });
+
+
+            //isMoving = false;
+            //return;
         }
 
         Ball distantBall = targetBall;
+
         manager.CheckBalls(targetBall);
 
         foreach(Ball ball in manager.ballsToDestroy)
         {
-            switch (direction)
+            switch (shootDirection)
             {
                 case Direction.up:
                     if (ball.x == distantBall.x & ball.y > distantBall.y) distantBall = ball;
@@ -129,21 +160,27 @@ public class PlayerManager : Singleton<PlayerManager>
             }
         }
 
-        manager.DestroyBalls();
-
-        print("ball should move to: " + distantBall.transform.position + " color " + distantBall.color);
-
-        float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
-
-        transform.DOMove(distantBall.transform.position, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+        if (targetBall.color == color)
         {
-            transform.DOMove(startPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
-            {
-                isMoving = false;
-                changeColor();
-            });
-        });
+            manager.DestroyBalls();
 
+            //isMoving = false;
+            //return;
+
+
+            print("ball should move to: " + distantBall.transform.position + " color " + distantBall.color);
+
+            float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
+
+            transform.DOMove(distantBall.transform.position, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                transform.DOMove(startPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+                {
+                    isMoving = false;
+                    changeColor();
+                });
+            });
+        }
     }
 
     private Ball GetTargetBall()
@@ -176,7 +213,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 break;
 
             case Direction.left:
-                for (int x = manager.gridSizeX - 1; x >=0; x--)
+                for (int x = manager.gridSizeX - 1; x >= 0; x--)
                 {
                     Ball ball = manager.ballGrid[x, (int)transform.position.y];
                     if (ball != null) return ball;
@@ -194,8 +231,30 @@ public class PlayerManager : Singleton<PlayerManager>
         await Task.Delay(500);
 
         spriteRenderer.sprite = manager.sprites[color];
-        trail.GetComponent<TrailRenderer>().endColor = ballColorMaterial[color].color;
-        trail.GetComponent<TrailRenderer>().startColor = ballColorMaterial[color].color;
+
+        // Trail Color
+        switch (spriteRenderer.sprite.name)
+        {
+            case "red":
+                color = 0;
+                break;
+            case "green":
+                color = 1;
+                break;
+            case "orange":
+                color = 2;
+                break;
+            case "purple":
+                color = 3;
+                break;
+            case "blue":
+                color = 4;
+                break;
+        }
+
+
+        trail.GetComponent<TrailRenderer>().endColor = GridManager.Instance.colorIndex[color];
+        trail.GetComponent<TrailRenderer>().startColor = GridManager.Instance.colorIndex[color];
     }
 
     private void HandleCollision(Ball ball)
