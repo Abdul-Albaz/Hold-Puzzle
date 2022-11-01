@@ -56,6 +56,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     void Update()
     {
+       
         if (transform.position.x == -1 && transform.position.y < manager.gridSizeY) direction = Direction.up;
         else if (transform.position.x < manager.gridSizeX && transform.position.y == manager.gridSizeY) direction = Direction.right;
         else if (transform.position.x == manager.gridSizeX && transform.position.y > -1) direction = Direction.down;
@@ -102,8 +103,10 @@ public class PlayerManager : Singleton<PlayerManager>
         Vector3 shootDirVector = shootDirection == Direction.up ? Vector3.up : shootDirection == Direction.right ? Vector3.right : shootDirection == Direction.down ? Vector3.down : Vector3.left;
 
         Ball targetBall = GetTargetBall();
+       
         this.targetBall = targetBall;
 
+        GetTargetBall();
 
         if (targetBall == null )
         {
@@ -130,6 +133,9 @@ public class PlayerManager : Singleton<PlayerManager>
             });
 
             return;
+
+
+
         }
 
 
@@ -161,7 +167,6 @@ public class PlayerManager : Singleton<PlayerManager>
         {
             manager.DestroyBalls();
 
-            
                 float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
 
                 transform.DOMove(distantBall.transform.position, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
@@ -170,6 +175,7 @@ public class PlayerManager : Singleton<PlayerManager>
                     {
                         transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
                         {
+                            manager.DestroyBalls();
                             isMoving = false;
                         });
                     }
@@ -185,14 +191,71 @@ public class PlayerManager : Singleton<PlayerManager>
            });
     }
 
-
-       
-
-    }
+ }
 
 
+    //private Ball BallCheck(Ball ball)
+    //{
+    //    //if (ball.x == 0 || ball.x == manager.gridSizeX - 1 || ball.y == 0 || ball.y == manager.gridSizeY - 1) return true;
 
-   
+    //    switch (shootDirection)
+    //    {
+    //        case Direction.right:
+
+    //            Debug.Log("right free");
+
+    //            for (int x = 0; x < manager.gridSizeX; x++)
+    //            {
+    //                Ball b = manager.ballGrid[i, (int)transform.position.y];
+    //                if (b.color == color) continue;
+    //                return ball;
+    //            }
+    //            break;
+
+
+    //        case Direction.left:
+
+    //            Debug.Log("left free");
+
+    //            for (int x = manager.gridSizeX - 1; x >= 0; x--)
+    //            {
+    //                Ball b = manager.ballGrid[i, (int)transform.position.y];
+    //                if (b.color == color) continue;
+    //                return ball;
+    //            }
+    //            break;
+
+
+    //        case Direction.up:
+
+    //            Debug.Log("up free");
+
+    //            for (int y = 0; y < manager.gridSizeY; y++)
+    //            {
+    //                Ball b = manager.ballGrid[(int)transform.position.x, i];
+    //                if (b.color == color) continue;
+    //                return ball;
+    //            }
+    //            break;
+
+
+    //        case Direction.down:
+
+    //            Debug.Log("down free");
+
+    //            for (int y = manager.gridSizeY - 1; y >= 0; y--)
+    //            {
+    //                Ball b = manager.ballGrid[(int)transform.position.x, i];
+    //                if (b.color == color) continue;
+    //                return ball;
+    //            }
+    //            break;
+    //    }
+
+    //    return null;
+    //}
+
+
     private bool BallShouldMoveForward(Ball ball)
     {
         //if (ball.x == 0 || ball.x == manager.gridSizeX - 1 || ball.y == 0 || ball.y == manager.gridSizeY - 1) return true;
@@ -206,7 +269,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int i = ball.x + 1; i < manager.gridSizeX; i++)
                 {
                     Ball b = manager.ballGrid[i, (int)transform.position.y];
-                    if (b == null) continue;
+                    if (b == null || b.color==color) continue;
                     return false;
                 }
                 break;
@@ -219,7 +282,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int i = ball.x - 1; i >= 0; i--)
                 {
                     Ball b = manager.ballGrid[i, (int)transform.position.y];
-                    if (b == null) continue;
+                    if (b == null || b.color == color) continue;
                     return false;
                 }
                 break;
@@ -232,7 +295,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int i = ball.y + 1; i < manager.gridSizeY; i++)
                 {
                     Ball b = manager.ballGrid[(int)transform.position.x, i];
-                    if (b == null) continue;
+                    if (b == null || b.color == color) continue;
                     return false;
                 }
                 break;
@@ -245,7 +308,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int i = ball.y - 1; i >= 0; i--)
                 {
                     Ball b = manager.ballGrid[(int)transform.position.x, i];
-                    if (b == null) continue;
+                    if (b == null || b.color == color) continue;
                     return false;
                 }
                 break;
@@ -265,7 +328,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for(int y = 0; y < manager.gridSizeY; y++)
                 {
                     Ball ball = manager.ballGrid[(int)transform.position.x, y];
-                    if (ball != null) return ball;
+                    if (ball != null ) return ball;
                 }
                 break;
 

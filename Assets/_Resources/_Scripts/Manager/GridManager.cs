@@ -86,6 +86,7 @@ public class GridManager : Singleton<GridManager>
                 FindBallsToDestroy(neighbor);
             }
         }
+
     }
 
     public void DestroyBalls()
