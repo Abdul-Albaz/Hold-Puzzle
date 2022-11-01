@@ -161,28 +161,48 @@ public class PlayerManager : Singleton<PlayerManager>
         {
             manager.DestroyBalls();
 
-            if (BallShouldMoveForward(distantBall))
-            {
-                print("true");
-                transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
+            
+                float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
+
+                transform.DOMove(distantBall.transform.position, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
                 {
-                    isMoving = false;
-                });       
-            }
-          
-            return;    
-        }
+                    if (BallShouldMoveForward(distantBall))
+                    {
+                        transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
+                        {
+                            isMoving = false;
+                        });
+                    }
+
+                    else  
+                    {
+                        transform.DOMove(startPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+                        {
+                            isMoving = false;
+                            changeColor();
+                        });
+                    }
+           });
     }
 
+
+       
+
+    }
+
+
+
+   
     private bool BallShouldMoveForward(Ball ball)
     {
         //if (ball.x == 0 || ball.x == manager.gridSizeX - 1 || ball.y == 0 || ball.y == manager.gridSizeY - 1) return true;
 
-        isMoving = false;
-
         switch (shootDirection)
         {
             case Direction.right:
+
+                Debug.Log("right free");
+
                 for (int i = ball.x + 1; i < manager.gridSizeX; i++)
                 {
                     Ball b = manager.ballGrid[i, (int)transform.position.y];
@@ -193,33 +213,39 @@ public class PlayerManager : Singleton<PlayerManager>
 
 
             case Direction.left:
-                for (int i = ball.x - 1; i >= 0;  i--)
+
+                Debug.Log("left free");
+
+                for (int i = ball.x - 1; i >= 0; i--)
                 {
                     Ball b = manager.ballGrid[i, (int)transform.position.y];
                     if (b == null) continue;
-
                     return false;
                 }
                 break;
 
 
             case Direction.up:
+
+                Debug.Log("up free");
+
                 for (int i = ball.y + 1; i < manager.gridSizeY; i++)
                 {
                     Ball b = manager.ballGrid[(int)transform.position.x, i];
                     if (b == null) continue;
-
                     return false;
                 }
                 break;
 
 
             case Direction.down:
+
+                Debug.Log("down free");
+
                 for (int i = ball.y - 1; i >= 0; i--)
                 {
                     Ball b = manager.ballGrid[(int)transform.position.x, i];
                     if (b == null) continue;
-
                     return false;
                 }
                 break;

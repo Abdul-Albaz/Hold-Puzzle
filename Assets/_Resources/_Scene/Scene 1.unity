@@ -791,7 +791,6 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: 76e64f86d59164a9298f5e83e26513ac, type: 3}
   - {fileID: 21300000, guid: 4e6962e06dfb04d45999c60b67e8ea06, type: 3}
-  - {fileID: 21300000, guid: aaf510e59ea6e4cc9a84814b2237eefb, type: 3}
   colorIndex:
   - {r: 0.9960785, g: 0.003921569, b: 0.3803922, a: 1}
   - {r: 0.09019608, g: 0.7176471, b: 0.003921569, a: 1}
