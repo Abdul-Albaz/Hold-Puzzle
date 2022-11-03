@@ -2,6 +2,9 @@ using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
+using System;
+using Random = UnityEngine.Random;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
@@ -19,7 +22,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     Direction direction;
     SpriteRenderer spriteRenderer;
-    public Ball targetBall;
     int color;
 
     void Start()
@@ -102,13 +104,9 @@ public class PlayerManager : Singleton<PlayerManager>
 
         Vector3 shootDirVector = shootDirection == Direction.up ? Vector3.up : shootDirection == Direction.right ? Vector3.right : shootDirection == Direction.down ? Vector3.down : Vector3.left;
 
-        Ball targetBall = GetTargetBall();
-       
-        this.targetBall = targetBall;
-
-        GetTargetBall();
-
-        if (targetBall == null )
+        var targetBall = GetTargetBall();
+        
+        if (targetBall == null)
         {
             transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
             {
@@ -121,11 +119,12 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (targetBall.color != color)
         {
-            float distance = Vector3.Magnitude(targetBall.transform.position - startPos);
 
-            transform.DOMove(targetBall.transform.position, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+            float distanceTarget = Vector3.Magnitude(targetBall.transform.position - startPos);
+
+            transform.DOMove(targetBall.transform.position, distanceTarget / speed).SetEase(Ease.Linear).OnComplete(() =>
             {
-                transform.DOMove(startPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+                transform.DOMove(startPos, distanceTarget / speed).SetEase(Ease.Linear).OnComplete(() =>
                 {
                     isMoving = false;
                     changeColor();
@@ -133,17 +132,22 @@ public class PlayerManager : Singleton<PlayerManager>
             });
 
             return;
-
-
-
         }
 
 
         Ball distantBall = targetBall;
+        manager.ballsToDestroy.Clear();
         manager.CheckBalls(targetBall);
 
+        while (targetBall != null)
+        {
+            targetBall = GetTargetBall();
+            if (targetBall == null) break;
+            if (targetBall.color != color) break;
+            manager.CheckBalls(targetBall);
+        }
 
-        foreach(Ball ball in manager.ballsToDestroy)
+        foreach (Ball ball in manager.ballsToDestroy)
         {
             switch (shootDirection)
             {
@@ -162,99 +166,32 @@ public class PlayerManager : Singleton<PlayerManager>
             }
         }
 
+        manager.DestroyBalls();
 
-        if (targetBall.color == color)
+        float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
+
+        transform.DOMove(distantBall.transform.position, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
         {
-            manager.DestroyBalls();
-
-                float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
-
-                transform.DOMove(distantBall.transform.position, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+            if (BallShouldMoveForward(distantBall))
+            {
+                transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
                 {
-                    if (BallShouldMoveForward(distantBall))
-                    {
-                        transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
-                        {
-                            manager.DestroyBalls();
-                            isMoving = false;
-                        });
-                    }
+                    manager.DestroyBalls();
+                    isMoving = false;
+                });
+            }
 
-                    else  
-                    {
-                        transform.DOMove(startPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
-                        {
-                            isMoving = false;
-                            changeColor();
-                        });
-                    }
-           });
+            else
+            {
+                transform.DOMove(startPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+                {
+                    isMoving = false;
+                    changeColor();
+                });
+            }
+        });
+
     }
-
- }
-
-
-    //private Ball BallCheck(Ball ball)
-    //{
-    //    //if (ball.x == 0 || ball.x == manager.gridSizeX - 1 || ball.y == 0 || ball.y == manager.gridSizeY - 1) return true;
-
-    //    switch (shootDirection)
-    //    {
-    //        case Direction.right:
-
-    //            Debug.Log("right free");
-
-    //            for (int x = 0; x < manager.gridSizeX; x++)
-    //            {
-    //                Ball b = manager.ballGrid[i, (int)transform.position.y];
-    //                if (b.color == color) continue;
-    //                return ball;
-    //            }
-    //            break;
-
-
-    //        case Direction.left:
-
-    //            Debug.Log("left free");
-
-    //            for (int x = manager.gridSizeX - 1; x >= 0; x--)
-    //            {
-    //                Ball b = manager.ballGrid[i, (int)transform.position.y];
-    //                if (b.color == color) continue;
-    //                return ball;
-    //            }
-    //            break;
-
-
-    //        case Direction.up:
-
-    //            Debug.Log("up free");
-
-    //            for (int y = 0; y < manager.gridSizeY; y++)
-    //            {
-    //                Ball b = manager.ballGrid[(int)transform.position.x, i];
-    //                if (b.color == color) continue;
-    //                return ball;
-    //            }
-    //            break;
-
-
-    //        case Direction.down:
-
-    //            Debug.Log("down free");
-
-    //            for (int y = manager.gridSizeY - 1; y >= 0; y--)
-    //            {
-    //                Ball b = manager.ballGrid[(int)transform.position.x, i];
-    //                if (b.color == color) continue;
-    //                return ball;
-    //            }
-    //            break;
-    //    }
-
-    //    return null;
-    //}
-
 
     private bool BallShouldMoveForward(Ball ball)
     {
@@ -317,8 +254,6 @@ public class PlayerManager : Singleton<PlayerManager>
         return true;
     }
 
-
-
     private Ball GetTargetBall()
     {
 
@@ -328,7 +263,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for(int y = 0; y < manager.gridSizeY; y++)
                 {
                     Ball ball = manager.ballGrid[(int)transform.position.x, y];
-                    if (ball != null ) return ball;
+                    if (ball != null && !manager.ballsToDestroy.Contains(ball)) return ball;
                 }
                 break;
 
@@ -336,7 +271,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int x = 0; x < manager.gridSizeX; x++)
                 {
                     Ball ball = manager.ballGrid[x, (int)transform.position.y];
-                    if (ball != null) return ball;
+                    if (ball != null && !manager.ballsToDestroy.Contains(ball)) return ball;
                 }
                 break;
 
@@ -344,7 +279,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int y = manager.gridSizeY - 1; y >= 0; y--)
                 {
                     Ball ball = manager.ballGrid[(int)transform.position.x, y];
-                    if (ball != null) return ball;
+                    if (ball != null && !manager.ballsToDestroy.Contains(ball)) return ball;
                 }
                 break;
 
@@ -352,12 +287,12 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int x = manager.gridSizeX - 1; x >= 0; x--)
                 {
                     Ball ball = manager.ballGrid[x, (int)transform.position.y];
-                    if (ball != null) return ball;
+                    if (ball != null && !manager.ballsToDestroy.Contains(ball)) return ball;
                 }
                 break;
         }
 
-        return targetBall;
+        return null;
     }
 
 

@@ -35,8 +35,8 @@ public class Ball : MonoBehaviour
 
     public async void Destroy()
     {
-        Vector3 targetPos = PlayerManager.Instance.targetBall.transform.position;
-        float distance = Vector3.Magnitude(targetPos - PlayerManager.Instance.startPos);
+        //Vector3 targetPos = transform.position;
+        float distance = Vector3.Magnitude(transform.position - PlayerManager.Instance.startPos);
 
         await Task.Delay((int)distance * duration);
 

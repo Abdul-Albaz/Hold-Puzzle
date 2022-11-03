@@ -71,7 +71,6 @@ public class GridManager : Singleton<GridManager>
 
     public void CheckBalls(Ball ball)
     {
-        ballsToDestroy.Clear();
         FindBallsToDestroy(ball);
     }
 
