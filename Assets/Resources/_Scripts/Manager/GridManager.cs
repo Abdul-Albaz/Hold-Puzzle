@@ -131,6 +131,7 @@ public class GridManager : Singleton<GridManager>
         if (balls.Count==0)
         {
             Debug.Log("You Win");
+            SoundManager.Play(AudioClips.victory);
         }
     }
 
