@@ -49,6 +49,8 @@ public class GridManager : Singleton<GridManager>
                 tileGrid[x, y] = newTile;
                 newTile.x = x;
                 newTile.y = y;
+
+
             }
         }
 
@@ -114,6 +116,7 @@ public class GridManager : Singleton<GridManager>
                 score++;
                 Debug.Log("Destroy");
                 ball.Destroy();
+                SoundManager.Play(AudioClips.button);
             }
 
             balls.Remove(ball);

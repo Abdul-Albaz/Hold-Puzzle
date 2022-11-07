@@ -36,6 +36,7 @@ public class Ball : MonoBehaviour
     public async void Destroy()
     {
         float distance = Vector3.Magnitude(transform.position - PlayerManager.Instance.startPos);
+        SoundManager.Play(AudioClips.tick);
         await Task.Delay((int)distance * duration);
 
         ParticleSystem();

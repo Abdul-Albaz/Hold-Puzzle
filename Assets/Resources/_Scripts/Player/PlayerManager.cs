@@ -112,13 +112,15 @@ public class PlayerManager : Singleton<PlayerManager>
         if (isMoving) return;
         isMoving = true;
         startPos = transform.position;
+        //int dist=nab
 
         Vector3 shootDirVector = shootDirection == Direction.up ? Vector3.up : shootDirection == Direction.right ? Vector3.right : shootDirection == Direction.down ? Vector3.down : Vector3.left;
 
         var targetBall = GetTargetBall();
 
         if (targetBall == null)
-        { 
+        {
+            SoundManager.Play(AudioClips.move);
             transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
             {
                 isMoving = false;
@@ -132,7 +134,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (targetBall.color != color)
         {
-            
+            SoundManager.Play(AudioClips.noAvailableMove);
             float distanceTarget = Vector3.Magnitude(targetBall.transform.position - startPos);
             trail.transform.DOScale(0.5f, 0.2f).SetEase(Ease.InBounce);
 
@@ -177,6 +179,7 @@ public class PlayerManager : Singleton<PlayerManager>
         manager.DestroyBalls();
         manager.winLevel();
         trail.gameObject.SetActive(true);
+       
 
         float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
 
@@ -184,7 +187,10 @@ public class PlayerManager : Singleton<PlayerManager>
         {
             if (BallShouldMoveForward(distantBall))
             {
-                transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
+                int dist = shootDirection == Direction.left ? manager.gridSizeX - distantBall.x : shootDirection == Direction.right ? distantBall.x : shootDirection == Direction.down ? manager.gridSizeY - distantBall.y : distantBall.y;
+                print("dist " + dist);
+
+                transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / (speed * dist)).SetEase(Ease.Linear).OnComplete(() =>
                 {
                     trail.gameObject.SetActive(false);
                     manager.DestroyBalls();
