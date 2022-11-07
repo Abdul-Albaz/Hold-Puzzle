@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
+
 public class GridManager : Singleton<GridManager>
 {
     public int gridSizeX;
@@ -11,12 +12,12 @@ public class GridManager : Singleton<GridManager>
     public GameObject ballPrefab;
     public GameObject tilePrefab;
     public Sprite[] sprites;
-   
-
+    
     [SerializeField]
     public Color[] colorIndex;
 
     public List<Ball> ballsToDestroy = new List<Ball>();
+    public List<Ball> balls = new List<Ball>();
 
     public Vector3 orginSpawnPoint;
 
@@ -25,9 +26,11 @@ public class GridManager : Singleton<GridManager>
 
     public  int width;
     public int height;
+    public int score;
 
     void Awake()
     {
+
         width = gridSizeX;
         height = gridSizeY;
 
@@ -45,9 +48,12 @@ public class GridManager : Singleton<GridManager>
                 Tile newTile = newTileGO.GetComponent<Tile>();
                 tileGrid[x, y] = newTile;
                 newTile.x = x;
-                newTile.y = y;   
+                newTile.y = y;
             }
         }
+
+        Camera.main.transform.position = new Vector3(transform.position.x + gridSizeX / 2, (transform.position.y + gridSizeY / 2), -10);
+        Camera.main.orthographicSize = gridSizeX + (Screen.height / Screen.width > 1.77 ? 1.5f : 0);
     }
 
     void Start()
@@ -65,9 +71,13 @@ public class GridManager : Singleton<GridManager>
                 cellBall.color = color;
 
                 ballGrid[x, y] = cellBall;
+
+                balls.Add(cellBall);
+                
             }
         }
     }
+
 
     public void CheckBalls(Ball ball)
     {
@@ -85,14 +95,39 @@ public class GridManager : Singleton<GridManager>
                 FindBallsToDestroy(neighbor);
             }
         }
-
+       
     }
 
     public void DestroyBalls()
     {
         foreach (Ball ball in ballsToDestroy)
         {
-            ball.Destroy();
+            if (ball == null)
+            {
+                Debug.Log("ball is null");
+                return;
+            }
+
+
+            else
+            {
+                score++;
+                Debug.Log("Destroy");
+                ball.Destroy();
+            }
+
+            balls.Remove(ball);
+        }
+
+      
+    }
+
+
+    public void winLevel()
+    {
+        if (balls.Count==0)
+        {
+            Debug.Log("You Win");
         }
     }
 

@@ -35,16 +35,21 @@ public class Ball : MonoBehaviour
 
     public async void Destroy()
     {
-        //Vector3 targetPos = transform.position;
         float distance = Vector3.Magnitude(transform.position - PlayerManager.Instance.startPos);
-
         await Task.Delay((int)distance * duration);
 
+        ParticleSystem();
 
-        // ParticleSystem
+        if (gameObject == null) return;
+
+        else  Destroy(gameObject);
+    }
+
+
+    public void ParticleSystem()
+    {
 
         ParticleSystem splatter = Instantiate(splatterParticle, transform.parent).GetComponent<ParticleSystem>();
-
         var mainColor = splatter.main;
         mainColor.startColor = GridManager.Instance.colorIndex[color];
 
@@ -55,8 +60,6 @@ public class Ball : MonoBehaviour
         ParticleSystemRenderer particle = Instantiate(explosionParticle, transform.parent).GetComponent<ParticleSystemRenderer>();
         particle.material.color = GridManager.Instance.colorIndex[color];
 
-        
-        Destroy(gameObject);
     }
 
 }
