@@ -27,7 +27,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     void Start()
     {
-
         trail.gameObject.SetActive(false);
         direction = Direction.up;
         color = Random.Range(0, manager.sprites.Length);
@@ -108,18 +107,20 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void ShootPlayer()
     {
+        
+
         trail.gameObject.SetActive(true);
         if (isMoving) return;
         isMoving = true;
         startPos = transform.position;
-        //int dist=nab
-
+       
         Vector3 shootDirVector = shootDirection == Direction.up ? Vector3.up : shootDirection == Direction.right ? Vector3.right : shootDirection == Direction.down ? Vector3.down : Vector3.left;
 
         var targetBall = GetTargetBall();
 
         if (targetBall == null)
         {
+           
             SoundManager.Play(AudioClips.move);
             transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
             {
@@ -138,11 +139,12 @@ public class PlayerManager : Singleton<PlayerManager>
             float distanceTarget = Vector3.Magnitude(targetBall.transform.position - startPos);
             trail.transform.DOScale(0.5f, 0.2f).SetEase(Ease.InBounce);
 
-            PlayerBounce(targetBall, distanceTarget);
-            BallBounce(targetBall , distanceTarget);
+            AnimateSquish(targetBall, distanceTarget, shootDirection);
+            AnimateBouncingBall(targetBall);
 
             return;
         }
+
 
         Ball distantBall = targetBall;
         manager.ballsToDestroy.Clear();
@@ -176,10 +178,11 @@ public class PlayerManager : Singleton<PlayerManager>
             }
         }
 
+        
         manager.DestroyBalls();
+        SoundManager.Play(AudioClips.button);
         manager.winLevel();
         trail.gameObject.SetActive(true);
-       
 
         float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
 
@@ -364,30 +367,57 @@ public class PlayerManager : Singleton<PlayerManager>
     }
 
 
-    public void BallBounce(Ball ball, float distanceTarget)
+    public void AnimateBouncingBall(Ball ball)
     {
-        ball.transform.DOScale(0.8f, distanceTarget/6f).SetEase(Ease.InBounce).OnComplete(() =>
+
+        int ballDist = shootDirection == Direction.left ? manager.gridSizeX: shootDirection == Direction.right ? ball.x : shootDirection == Direction.down ? manager.gridSizeY : ball.y;     
+
+        ball.transform.DOScale(0.8f, ballDist / speed).SetDelay(ballDist / speed).SetEase(Ease.InBounce).OnComplete(() =>
         {
-            ball.transform.DOScale(1f, distanceTarget / 6f).SetEase(Ease.OutBounce);
+            ball.transform.DOScale(1f,0.1f).SetEase(Ease.OutBounce);
         });
+      
     }
 
-
-    public void PlayerBounce(Ball targetBall, float distanceTarget)
+    public void AnimateSquish(Ball targetBall, float distanceTarget, Direction direction)
     {
-        transform.DOMove(targetBall.transform.position, distanceTarget / speed).SetEase(Ease.Linear).OnComplete(() =>
+        Vector3 target = targetBall.color == color ? targetBall.transform.position : targetBall.transform.position + (shootDirection == Direction.left ? Vector3.right *0.75f : shootDirection == Direction.right ? Vector3.left * 0.75f : shootDirection == Direction.down ? Vector3.up * 0.75f : Vector3.down * 0.75f);
+
+        transform.DOMove(target, distanceTarget / speed).SetEase(Ease.Linear).OnComplete(() =>
         {
-
-            transform.DOScaleY(1.29f, 0.2f).SetEase(Ease.InBounce);
-            transform.DOScaleX(0.8f, 0.2f).SetEase(Ease.InBounce);
-
-            transform.DOMove(startPos, distanceTarget / speed).SetEase(Ease.Linear).OnComplete(() =>
+            transform.DOMove(startPos, distanceTarget / speed).SetEase(Ease.Linear).SetDelay(0.1f).OnComplete(() =>
             {
                 transform.DOScale(1f, 0.2f).SetEase(Ease.OutBounce);
                 isMoving = false;
                 changeColor();
             });
+
+            if (direction == Direction.up || direction == Direction.down)
+            {
+                transform.DOScaleY(0.8f, 1 / speed).SetEase(Ease.InBounce).OnComplete(() =>
+                {
+                    transform.DOScaleY(1f, 1 / speed).SetEase(Ease.InBounce);
+                });
+
+            } else
+            {
+                transform.DOScaleX(0.8f, 1 / speed).SetEase(Ease.InBounce).OnComplete(() =>
+                {
+                    transform.DOScaleX(1f, 1 / speed).SetEase(Ease.InBounce);
+                });
+            }
         });
+
+        if (direction == Direction.up || direction == Direction.down)
+        {
+            transform.DOScaleX(0.8f, distanceTarget / speed).SetEase(Ease.InBounce);
+            transform.DOScaleY(1.29f, distanceTarget / speed).SetEase(Ease.InBounce);
+        }
+        else
+        {
+            transform.DOScaleX(1.29f, distanceTarget / speed).SetEase(Ease.InBounce);
+            transform.DOScaleY(0.8f, distanceTarget / speed).SetEase(Ease.InBounce);
+        }
     }
 
 

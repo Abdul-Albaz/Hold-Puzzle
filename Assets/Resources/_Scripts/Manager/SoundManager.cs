@@ -29,7 +29,6 @@ public class SoundManager : Singleton<SoundManager>
 
     private static AudioClip GetButtonAudio()
     {
-        //var clip = Resources.Load<AudioClip>($"Sounds/button{buttonIndex % 5}");
         var clip = Resources.Load<AudioClip>($"Sounds/button");
         buttonIndex++;
         return clip;
@@ -42,4 +41,4 @@ public class SoundManager : Singleton<SoundManager>
     }
 }
 
-public enum AudioClips { noAvailableMove, move, expand, ball, victory, confetti , button, tick }
+public enum AudioClips { noAvailableMove, move, ball, victory, confetti , button }
