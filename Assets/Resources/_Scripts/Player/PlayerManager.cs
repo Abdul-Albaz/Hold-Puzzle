@@ -369,8 +369,9 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void AnimateBouncingBall(Ball ball)
     {
+        int ballDist = shootDirection == Direction.left ? manager.gridSizeX - ball.x: shootDirection == Direction.right ? ball.x : shootDirection == Direction.down ? manager.gridSizeY - ball.y : ball.y;
 
-        int ballDist = shootDirection == Direction.left ? manager.gridSizeX: shootDirection == Direction.right ? ball.x : shootDirection == Direction.down ? manager.gridSizeY : ball.y;     
+        Debug.Log(shootDirection);
 
         ball.transform.DOScale(0.8f, ballDist / speed).SetDelay(ballDist / speed).SetEase(Ease.InBounce).OnComplete(() =>
         {
