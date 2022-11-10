@@ -27,9 +27,11 @@ public class GridManager : Singleton<GridManager>
     public  int width;
     public int height;
     public int score;
+   
 
     void Awake()
     {
+        
         width = gridSizeX;
         height = gridSizeY;
 
@@ -60,12 +62,13 @@ public class GridManager : Singleton<GridManager>
     {
         for (int x = 0; x < gridSizeX; x++)
         {
+            int color = Random.Range(0, sprites.Length);
+
             for (int y = 0; y < gridSizeY; y++)
             {
                 Ball cellBall = Instantiate(ballPrefab, tileGrid[x, y].transform).GetComponent<Ball>();
 
-                int color = Random.Range(0, sprites.Length);
-
+               
                 cellBall.x = x;
                 cellBall.y = y;
                 cellBall.color = color;
@@ -77,7 +80,6 @@ public class GridManager : Singleton<GridManager>
             }
         }
     }
-
 
     public void CheckBalls(Ball ball)
     {
@@ -108,23 +110,16 @@ public class GridManager : Singleton<GridManager>
                 return;
             }
 
-
             else
             {
                 score++;
                 Debug.Log("Destroy");
-                ball.Destroy();
-                
+                ball.Destroy();              
             }
 
             balls.Remove(ball);
         }
-
-
-
-      
     }
-
 
     public void winLevel()
     {

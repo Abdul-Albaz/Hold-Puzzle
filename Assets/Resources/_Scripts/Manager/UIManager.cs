@@ -8,6 +8,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject handIcon;
     private GridManager manager => GridManager.Instance;
     public TextMeshProUGUI textScore;
+    public TextMeshProUGUI move;
 
     void Start()
     {
@@ -19,6 +20,7 @@ public class UIManager : Singleton<UIManager>
         if(Input.GetMouseButton(0)) handIcon.transform.DOLocalMoveY(-2580f, 1.2f).SetEase(Ease.OutBack);
 
         textScore.text = "Score :  " + manager.score;
+        move.text = "Move :  " + PlayerManager.Instance.moveScore;
 
     }
 

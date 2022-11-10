@@ -10,9 +10,10 @@ using UnityEngine.UIElements;
 public class PlayerManager : Singleton<PlayerManager>
 {
     bool isMoving;
+    public int moveScore;
 
     public Vector3 startPos, targetPos;
-    private Direction shootDirection;
+    public Direction shootDirection;
     private float timeToMove = 0.2f;
     [SerializeField] private float speed = 5;
 
@@ -20,13 +21,13 @@ public class PlayerManager : Singleton<PlayerManager>
     public Vector3 lastPos;
     public GameObject trail;
 
-
     Direction direction;
     SpriteRenderer spriteRenderer;
     int color;
 
     void Start()
     {
+        moveScore = 0;
         trail.gameObject.SetActive(false);
         direction = Direction.up;
         color = Random.Range(0, manager.sprites.Length);
@@ -60,7 +61,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     void Update()
     {
-
         if (transform.position.x == -1 && transform.position.y < manager.gridSizeY) direction = Direction.up;
         else if (transform.position.x < manager.gridSizeX && transform.position.y == manager.gridSizeY) direction = Direction.right;
         else if (transform.position.x == manager.gridSizeX && transform.position.y > -1) direction = Direction.down;
@@ -73,14 +73,15 @@ public class PlayerManager : Singleton<PlayerManager>
             MovePlayer(direction);
         }
 
+        //Todo use mouse without LeftShift
         if (Input.GetMouseButtonUp(0))
         {
             Debug.Log("Up");
         }
 
-
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            moveScore++;
             if (transform.position.x == -1 && transform.position.y == -1) return;
             else if (transform.position.x == -1 && transform.position.y == manager.gridSizeY) return;
             else if (transform.position.x == manager.gridSizeX && transform.position.y == -1) return;
@@ -107,8 +108,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void ShootPlayer()
     {
-        
-
         trail.gameObject.SetActive(true);
         if (isMoving) return;
         isMoving = true;
@@ -119,8 +118,7 @@ public class PlayerManager : Singleton<PlayerManager>
         var targetBall = GetTargetBall();
 
         if (targetBall == null)
-        {
-           
+        { 
             SoundManager.Play(AudioClips.move);
             transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
             {
@@ -135,7 +133,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (targetBall.color != color)
         {
-            SoundManager.Play(AudioClips.noAvailableMove);
+           
             float distanceTarget = Vector3.Magnitude(targetBall.transform.position - startPos);
             trail.transform.DOScale(0.5f, 0.2f).SetEase(Ease.InBounce);
 
@@ -193,12 +191,14 @@ public class PlayerManager : Singleton<PlayerManager>
                 int dist = shootDirection == Direction.left ? manager.gridSizeX - distantBall.x : shootDirection == Direction.right ? distantBall.x : shootDirection == Direction.down ? manager.gridSizeY - distantBall.y : distantBall.y;
                 print("dist " + dist);
 
-                transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / (speed * dist)).SetEase(Ease.Linear).OnComplete(() =>
-                {
-                    trail.gameObject.SetActive(false);
-                    manager.DestroyBalls();
-                    isMoving = false;
-                });
+                    transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / (speed * dist)).SetEase(Ease.Linear).OnComplete(() =>
+                    {
+                        trail.gameObject.SetActive(false);
+                        manager.DestroyBalls();
+                        isMoving = false;
+                    });
+                
+                
             }
 
             else
@@ -363,7 +363,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void HandleCollision(Ball ball)
     {
-        //changeColor();
+        //Todo changeColor();
     }
 
 
@@ -371,13 +371,11 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         int ballDist = shootDirection == Direction.left ? manager.gridSizeX - ball.x: shootDirection == Direction.right ? ball.x : shootDirection == Direction.down ? manager.gridSizeY - ball.y : ball.y;
 
-        Debug.Log(shootDirection);
-
         ball.transform.DOScale(0.8f, ballDist / speed).SetDelay(ballDist / speed).SetEase(Ease.InBounce).OnComplete(() =>
         {
-            ball.transform.DOScale(1f,0.1f).SetEase(Ease.OutBounce);
+            ball.transform.DOScale(1f, 0.1f).SetEase(Ease.OutBounce);
         });
-      
+
     }
 
     public void AnimateSquish(Ball targetBall, float distanceTarget, Direction direction)
@@ -386,10 +384,13 @@ public class PlayerManager : Singleton<PlayerManager>
 
         transform.DOMove(target, distanceTarget / speed).SetEase(Ease.Linear).OnComplete(() =>
         {
+            SoundManager.Play(AudioClips.noAvailableMove);
+
             transform.DOMove(startPos, distanceTarget / speed).SetEase(Ease.Linear).SetDelay(0.1f).OnComplete(() =>
             {
                 transform.DOScale(1f, 0.2f).SetEase(Ease.OutBounce);
                 isMoving = false;
+                
                 changeColor();
             });
 

@@ -19,9 +19,17 @@ public class Ball : MonoBehaviour
     public GameObject splatterParticle;
     public GameObject ringParticle;
 
+    public Animator animator;
 
     public void Start()
     {
+
+        animator.SetTrigger("BounceLeft");
+        animator.SetTrigger("BounceRight");
+        animator.SetTrigger("BounceLeft");
+        animator.SetTrigger("BounceUp");
+
+
         GetComponent<SpriteRenderer>().sprite = manager.sprites[color];
        
         if (y > 0) neighbors.Add(manager.ballGrid[x, y - 1]);
@@ -33,6 +41,11 @@ public class Ball : MonoBehaviour
         if (x < manager.width - 1) neighbors.Add(manager.ballGrid[x + 1, y]);
     }
 
+
+    private void Update()
+    {
+        //hitPlayer();
+    }
     public async void Destroy()
     {
         float distance = Vector3.Magnitude(transform.position - PlayerManager.Instance.startPos);
@@ -63,4 +76,6 @@ public class Ball : MonoBehaviour
 
     }
 
+    
+    
 }

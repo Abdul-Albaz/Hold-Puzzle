@@ -241,5 +241,6 @@ MonoBehaviour:
   startPos: {x: 0, y: 0, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
   speed: 10
+  animator: {fileID: 0}
   lastPos: {x: 0, y: 0, z: 0}
   trail: {fileID: 4717782667326274888}
