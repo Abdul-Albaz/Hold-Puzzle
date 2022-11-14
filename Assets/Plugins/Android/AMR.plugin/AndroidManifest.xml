@@ -4,16 +4,15 @@
     <!-- Androidx+ multidex, put inside application tag : android:name="androidx.multidex.MultiDexApplication" -->
     <application android:networkSecurityConfig="@xml/admost_network_security_config_ext">
 
-        <!--
-        TODO  CRITICAL: You need to uncomment it and add your  admob app id.
+        
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="ADMOB_APP_ID"/>-->
+                android:value="ca-app-pub-1638526051519794~9183469575"/>
 		
         <!-- APPLOVIN -->
-        <meta-data
-            android:name="applovin.sdk.key"
-            android:value="YOUR_APPLOVIN_SDK_KEY_HERE" />
+<!--        <meta-data-->
+<!--            android:name="applovin.sdk.key"-->
+<!--            android:value="YOUR_APPLOVIN_SDK_KEY_HERE" />-->
 
     </application>
 
