@@ -155,7 +155,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.gamina.holdpuzel
+    Android: com.gamina.ballRoulette
     iPhone: com.gamina.holdpuzel
   buildNumber:
     Standalone: 0

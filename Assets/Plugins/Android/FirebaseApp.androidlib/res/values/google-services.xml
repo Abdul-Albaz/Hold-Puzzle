@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
-  <string name="gcm_defaultSenderId" translatable="false">149641743195</string>
-  <string name="google_storage_bucket" translatable="false">sdk-template-41ea6.appspot.com</string>
-  <string name="project_id" translatable="false">sdk-template-41ea6</string>
-  <string name="google_api_key" translatable="false">AIzaSyBBdkpNt4y9bSV4V28U1DZ9bcBaAcItPeM</string>
-  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBBdkpNt4y9bSV4V28U1DZ9bcBaAcItPeM</string>
-  <string name="google_app_id" translatable="false">1:149641743195:android:7270517c584c017b42287e</string>
-  <string name="default_web_client_id" translatable="false">149641743195-hvp90q06gdianl46km98qr3djal04dn5.apps.googleusercontent.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">855701797269</string>
+  <string name="google_storage_bucket" translatable="false">ball-roulette.appspot.com</string>
+  <string name="project_id" translatable="false">ball-roulette</string>
+  <string name="google_api_key" translatable="false">AIzaSyCGEcz2wM9DKR_InYm5mJJfMDtSOYf_zLg</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCGEcz2wM9DKR_InYm5mJJfMDtSOYf_zLg</string>
+  <string name="google_app_id" translatable="false">1:855701797269:android:170f3e2df29e10ade49e9c</string>
+  <string name="default_web_client_id" translatable="false">855701797269-soi681s34uqnjr4uasevplacdhgdvomt.apps.googleusercontent.com</string>
 </resources>

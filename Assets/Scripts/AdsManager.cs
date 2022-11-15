@@ -37,10 +37,10 @@ public class AdsManager : Singleton<AdsManager>
         config.RewardedVideoIdAndroid = AdIds.Android.rewarded;
         config.BannerIdAndroid = AdIds.Android.banner;
 
-        config.ApplicationIdIOS = AdIds.iOS.app;
-        config.InterstitialIdIOS= AdIds.iOS.interstitial;
-        config.RewardedVideoIdIOS= AdIds.iOS.rewarded;
-        config.BannerIdIOS = AdIds.iOS.banner;
+        //config.ApplicationIdIOS = AdIds.iOS.app;
+        //config.InterstitialIdIOS= AdIds.iOS.interstitial;
+        //config.RewardedVideoIdIOS= AdIds.iOS.rewarded;
+        //config.BannerIdIOS = AdIds.iOS.banner;
 
         //Privacy COMPLIANCE
         config.UserConsent = "1";
@@ -87,19 +87,19 @@ public class AdsManager : Singleton<AdsManager>
     {
         public static class Android
         {
-            public static string app = "test";
-            public static string rewarded = "test";
-            public static string interstitial = "test";
-            public static string banner = "test";
+            public static string app = "642f472b-5a73-40f4-8c50-810f249fe01d";
+            public static string rewarded = "b3fb5642-6e83-4b05-9942-e57621643ab1";
+            public static string interstitial = "5d791991-330d-482f-8b28-54994227e52c";
+            public static string banner = "2062727a-b287-4a10-9e31-582bffd278be";
         }
 
-        public static class iOS
-        {
-            public static string app = "test";
-            public static string rewarded = "test";
-            public static string interstitial = "test";
-            public static string banner = "test";
-        }
+        //public static class iOS
+        //{
+        //    public static string app = "test";
+        //    public static string rewarded = "test";
+        //    public static string interstitial = "test";
+        //    public static string banner = "test";
+        //}
     }
 
     public void Success(AdType adType) { }

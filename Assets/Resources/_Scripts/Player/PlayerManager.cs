@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 public class PlayerManager : Singleton<PlayerManager>
 {
     bool isMoving;
+    bool isInTouch = false;
     public int moveScore;
 
     public Vector3 startPos, targetPos;
@@ -66,32 +67,29 @@ public class PlayerManager : Singleton<PlayerManager>
         else if (transform.position.x == manager.gridSizeX && transform.position.y > -1) direction = Direction.down;
         else direction = Direction.left;
 
+        if (Input.GetMouseButtonUp(0)) isInTouch = false;
+
         if (isMoving) return;
 
         if (Input.GetMouseButton(0))
         {
+            isInTouch = true;
             MovePlayer(direction);
         }
+    }
 
-        //Todo use mouse without LeftShift
-        if (Input.GetMouseButtonUp(0))
-        {
-            Debug.Log("Up");
-        }
+    private void MoveAndPop()
+    {
+        moveScore++;
+        if (transform.position.x == -1 && transform.position.y == -1) return;
+        else if (transform.position.x == -1 && transform.position.y == manager.gridSizeY) return;
+        else if (transform.position.x == manager.gridSizeX && transform.position.y == -1) return;
+        else if (transform.position.x == manager.gridSizeX && transform.position.y == manager.gridSizeY) return;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            moveScore++;
-            if (transform.position.x == -1 && transform.position.y == -1) return;
-            else if (transform.position.x == -1 && transform.position.y == manager.gridSizeY) return;
-            else if (transform.position.x == manager.gridSizeX && transform.position.y == -1) return;
-            else if (transform.position.x == manager.gridSizeX && transform.position.y == manager.gridSizeY) return;
+        lastPos = transform.position;
 
-            lastPos = transform.position;
-
-            shootDirection = direction == Direction.up ? Direction.right : direction == Direction.right ? Direction.down : direction == Direction.left ? Direction.up : Direction.left;
-            ShootPlayer();
-        }
+        shootDirection = direction == Direction.up ? Direction.right : direction == Direction.right ? Direction.down : direction == Direction.left ? Direction.up : Direction.left;
+        ShootPlayer();
     }
 
     private void MovePlayer(Direction direction)
@@ -103,13 +101,16 @@ public class PlayerManager : Singleton<PlayerManager>
         targetPos = startPos + moveDirection;
         float distance = Vector3.Magnitude(targetPos - startPos);
 
-        transform.DOMove(targetPos, distance / speed).SetEase(Ease.Linear).OnComplete(() => isMoving = false);
+        transform.DOMove(targetPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            if (!isInTouch) MoveAndPop();
+            isMoving = false;
+        });
     }
 
     private void ShootPlayer()
     {
         trail.gameObject.SetActive(true);
-        if (isMoving) return;
         isMoving = true;
         startPos = transform.position;
        

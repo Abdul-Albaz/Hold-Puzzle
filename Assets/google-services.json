@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "855701797269",
+    "project_id": "ball-roulette",
+    "storage_bucket": "ball-roulette.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855701797269:android:170f3e2df29e10ade49e9c",
+        "android_client_info": {
+          "package_name": "com.gamina.ballRoulette"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855701797269-soi681s34uqnjr4uasevplacdhgdvomt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGEcz2wM9DKR_InYm5mJJfMDtSOYf_zLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855701797269-soi681s34uqnjr4uasevplacdhgdvomt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
