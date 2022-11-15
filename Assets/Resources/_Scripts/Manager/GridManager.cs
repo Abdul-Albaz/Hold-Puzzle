@@ -62,10 +62,11 @@ public class GridManager : Singleton<GridManager>
     {
         for (int x = 0; x < gridSizeX; x++)
         {
-            int color = Random.Range(0, sprites.Length);
 
             for (int y = 0; y < gridSizeY; y++)
             {
+                int color = Random.Range(0, sprites.Length);
+
                 Ball cellBall = Instantiate(ballPrefab, tileGrid[x, y].transform).GetComponent<Ball>();
 
                
