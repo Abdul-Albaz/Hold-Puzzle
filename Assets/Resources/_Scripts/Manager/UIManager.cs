@@ -20,7 +20,7 @@ public class UIManager : Singleton<UIManager>
         if(Input.GetMouseButton(0)) handIcon.transform.DOLocalMoveY(-2580f, 1.2f).SetEase(Ease.OutBack);
 
         textScore.text = "Score :  " + manager.score;
-        move.text = "Move :  " + PlayerManager.Instance.moveScore;
+        move.text = "Move :  " + PlayerManager.Instance.moveCounter;
 
     }
 

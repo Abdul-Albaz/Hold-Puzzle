@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
-
 public class GridManager : Singleton<GridManager>
 {
     public int gridSizeX;
@@ -93,8 +92,7 @@ public class GridManager : Singleton<GridManager>
             {
                 FindBallsToDestroy(neighbor);
             }
-        }
-       
+        } 
     }
 
     public void DestroyBalls()

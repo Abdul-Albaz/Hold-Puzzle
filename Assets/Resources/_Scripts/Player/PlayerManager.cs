@@ -10,7 +10,7 @@ public class PlayerManager : Singleton<PlayerManager>
 {
     bool isMoving;
     bool isInTouch = false;
-    public int moveScore;
+    public int moveCounter;
 
     public Vector3 startPos, targetPos;
     public Direction shootDirection;
@@ -26,7 +26,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     void Start()
     {
-        moveScore = 0;
+        moveCounter = 0;
         trail.gameObject.SetActive(false);
         direction = Direction.up;
         color = Random.Range(0, manager.sprites.Length);
@@ -78,14 +78,15 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void MoveAndPop()
     {
-        moveScore++;
+        
         if (transform.position.x == -1 && transform.position.y == -1) return;
         else if (transform.position.x == -1 && transform.position.y == manager.gridSizeY) return;
         else if (transform.position.x == manager.gridSizeX && transform.position.y == -1) return;
         else if (transform.position.x == manager.gridSizeX && transform.position.y == manager.gridSizeY) return;
 
-        lastPos = transform.position;
+        moveCounter++;
 
+        lastPos = new Vector3(transform.position.x,transform.position.y,transform.position.z);
         shootDirection = direction == Direction.up ? Direction.right : direction == Direction.right ? Direction.down : direction == Direction.left ? Direction.up : Direction.left;
         ShootPlayer();
     }
@@ -93,6 +94,7 @@ public class PlayerManager : Singleton<PlayerManager>
     private void MovePlayer(Direction direction)
     {
         trail.gameObject.SetActive(false);
+        
         Vector3 moveDirection = direction == Direction.up ? Vector3.up : direction == Direction.right ? Vector3.right : direction == Direction.down ? Vector3.down : Vector3.left;
         isMoving = true;
         startPos = transform.position;
@@ -129,10 +131,8 @@ public class PlayerManager : Singleton<PlayerManager>
             return;
         }
 
-
         if (targetBall.color != color)
-        {
-           
+        {  
             float distanceTarget = Vector3.Magnitude(targetBall.transform.position - startPos);
             trail.transform.DOScale(0.5f, 0.2f).SetEase(Ease.InBounce);
 
@@ -174,8 +174,7 @@ public class PlayerManager : Singleton<PlayerManager>
                     break;
             }
         }
-
-        
+ 
         manager.DestroyBalls();
         SoundManager.Play(AudioClips.button);
         manager.winLevel();
@@ -196,8 +195,7 @@ public class PlayerManager : Singleton<PlayerManager>
                         manager.DestroyBalls();
                         isMoving = false;
                     });
-                
-                
+
             }
 
             else
