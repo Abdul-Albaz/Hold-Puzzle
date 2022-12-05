@@ -30,31 +30,7 @@ public class GridManager : Singleton<GridManager>
 
     void Awake()
     {
-        
-        width = gridSizeX;
-        height = gridSizeY;
-
-        tileGrid = new Tile[width, height];
-        ballGrid = new Ball[width, height];
-
-        GameObject playerObject = Instantiate(playerPrefab, orginSpawnPoint + new Vector3(-1, -1, 0), Quaternion.identity);
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {               
-                GameObject newTileGO = Instantiate(tilePrefab, orginSpawnPoint + new Vector3(x, y, 0), Quaternion.identity);
-                newTileGO.transform.parent = transform; 
-                Tile newTile = newTileGO.GetComponent<Tile>();
-                tileGrid[x, y] = newTile;
-                newTile.x = x;
-                newTile.y = y;
-
-            }
-        }
-
-        Camera.main.transform.position = new Vector3(transform.position.x + gridSizeX / 2, (transform.position.y + gridSizeY / 2), -10);
-        Camera.main.orthographicSize = gridSizeX + (Screen.height / Screen.width > 1.77 ? 1.5f : 0);
+        StartTheGame();
     }
 
     void Start()
@@ -77,13 +53,43 @@ public class GridManager : Singleton<GridManager>
         }
     }
 
+    public void StartTheGame()
+    {
+        width = gridSizeX;
+        height = gridSizeY;
+
+        tileGrid = new Tile[width, height];
+        ballGrid = new Ball[width, height];
+
+        GameObject playerObject = Instantiate(playerPrefab, orginSpawnPoint + new Vector3(-1, -1, 0), Quaternion.identity);
+
+        for (int x = 0; x<width; x++)
+        {
+            for (int y = 0; y<height; y++)
+            {               
+                GameObject newTileGO = Instantiate(tilePrefab, orginSpawnPoint + new Vector3(x, y, 0), Quaternion.identity);
+                newTileGO.transform.parent = transform; 
+                Tile newTile = newTileGO.GetComponent<Tile>();
+                tileGrid[x, y] = newTile;
+                newTile.x = x;
+                newTile.y = y;
+
+            }
+        }
+
+        Camera.main.transform.position = new Vector3(transform.position.x + gridSizeX / 2, (transform.position.y + gridSizeY / 2), -10);
+        Camera.main.orthographicSize = gridSizeX + (Screen.height / Screen.width > 1.77 ? 1.5f : 0);
+    }
+
     public void CheckBalls(Ball ball)
     {
+        print($"checkBalls for: {ball.color}");
         FindBallsToDestroy(ball);
     }
 
     public void FindBallsToDestroy(Ball ball)
     {
+        print($"findBallsToDestroy for: {ball.color}");
         ballsToDestroy.Add(ball);
 
         foreach (Ball neighbor in ball.neighbors)
@@ -99,7 +105,7 @@ public class GridManager : Singleton<GridManager>
     {
         foreach (Ball ball in ballsToDestroy)
         {
-            if (ball == null)
+            if (ball is null)
             {
                 Debug.Log("ball is null");
                 return;
@@ -109,19 +115,26 @@ public class GridManager : Singleton<GridManager>
             {
                 score++;
                 Debug.Log("Destroy");
+               
                 ball.Destroy();              
             }
 
             balls.Remove(ball);
+            SoundManager.Play(AudioClips.button);
         }
     }
 
-    public void winLevel()
+    public async void winLevel()
     {
-        if (balls.Count==0)
+        if (balls.Count == 0)
         {
             Debug.Log("You Win");
             SoundManager.Play(AudioClips.victory);
+
+            //StarManager.Instance.add(moveCounter);
+          
+            await Task.Delay(2000);
+            UIManager.Instance.setTransition(Views.leaderboard);
         }
     }
 

@@ -8,24 +8,25 @@ using Random = UnityEngine.Random;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
-    bool isMoving;
-    bool isInTouch = false;
+    public bool isMoving;
+    public bool isInTouch = false;
+    
     public int moveCounter;
 
     public Vector3 startPos, targetPos;
+    private int posX,posY, posZ;
     public Direction shootDirection;
     [SerializeField] private float speed = 8;
-
-    public GridManager manager => GridManager.Instance;
+    private GridManager manager => GridManager.Instance;
     public Vector3 lastPos;
     public GameObject trail;
-
+    private Tween tween;
     Direction direction;
     SpriteRenderer spriteRenderer;
     int color;
-
     void Start()
     {
+        startPos = transform.position;
         moveCounter = 0;
         trail.gameObject.SetActive(false);
         direction = Direction.up;
@@ -33,124 +34,126 @@ public class PlayerManager : Singleton<PlayerManager>
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = manager.sprites[color];
 
-        switch (spriteRenderer.sprite.name)
-        {
-            case "red":
-                color = 0;
-                break;
-            case "green":
-                color = 1;
-                break;
-            case "orange":
-                color = 2;
-                break;
-            case "purple":
-                color = 3;
-                break;
-            case "blue":
-                color = 4;
-                break;
-        }
-
-        Debug.Log("spriteRenderer.name " + spriteRenderer.name);
-
-        trail.GetComponent<TrailRenderer>().endColor = GridManager.Instance.colorIndex[color];
-        trail.GetComponent<TrailRenderer>().startColor = GridManager.Instance.colorIndex[color];
+        changeColor();
     }
 
     void Update()
     {
-        if (transform.position.x == -1 && transform.position.y < manager.gridSizeY) direction = Direction.up;
-        else if (transform.position.x < manager.gridSizeX && transform.position.y == manager.gridSizeY) direction = Direction.right;
-        else if (transform.position.x == manager.gridSizeX && transform.position.y > -1) direction = Direction.down;
-        else direction = Direction.left;
+         isInTouch = Input.touchCount > 0;
+        
+         if (isMoving) return;
+         if (!isInTouch)  return;
+        // if(Input.GetMouseButtonUp(0)) isInTouch = false;
+        // if(Input.GetMouseButtonDown(0)) isInTouch = true;true
 
-        if (Input.GetMouseButtonUp(0)) isInTouch = false;
+        
 
-        if (isMoving) return;
+        Debug.Log("shoot update");
 
-        if (Input.GetMouseButton(0))
+        if (transform.position.x == -1 && transform.position.y < manager.gridSizeY) {direction = Direction.up; } 
+        else if (transform.position.x < manager.gridSizeX && transform.position.y == manager.gridSizeY) {direction = Direction.right; }
+        else if (transform.position.x == manager.gridSizeX && transform.position.y > -1) {direction = Direction.down; }
+        else  {direction = Direction.left; } 
+        
+        Debug.Log("isMoving " + isMoving);
+
+        
+        MovePlayer();
+    }
+
+    private void MovePlayer()
+    {
+        isMoving = true;
+      
+        Debug.Log("shoot MovePlayer");
+        
+        trail.SetActive(false);
+        Vector3 moveDirection = direction == Direction.up ? Vector3.up : direction == Direction.right ? Vector3.right : direction == Direction.down ? Vector3.down : Vector3.left;
+        startPos = transform.position;
+        targetPos = startPos + moveDirection;
+
+        float distance = Vector3.Magnitude( targetPos - startPos );
+        
+        tween = transform.DOMove(targetPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
         {
-            isInTouch = true;
-            MovePlayer(direction);
-        }
+            if (!isInTouch) MoveAndPop();
+            else isMoving = false;
+            
+            Debug.Log("isMoving " + isMoving);
+        });
+        
+      
     }
 
     private void MoveAndPop()
     {
+        Debug.Log("shoot MoveAndPop");
         
         if (transform.position.x == -1 && transform.position.y == -1) return;
-        else if (transform.position.x == -1 && transform.position.y == manager.gridSizeY) return;
-        else if (transform.position.x == manager.gridSizeX && transform.position.y == -1) return;
-        else if (transform.position.x == manager.gridSizeX && transform.position.y == manager.gridSizeY) return;
+        if (transform.position.x == -1 && transform.position.y == manager.gridSizeY) return;
+        if (transform.position.x == manager.gridSizeX && transform.position.y == -1)  return;
+        if (transform.position.x == manager.gridSizeX && transform.position.y == manager.gridSizeY) return;
 
         moveCounter++;
-
-        lastPos = new Vector3(transform.position.x,transform.position.y,transform.position.z);
+        Debug.Log("shoot shootDirection Move And Pop "+ shootDirection);
         shootDirection = direction == Direction.up ? Direction.right : direction == Direction.right ? Direction.down : direction == Direction.left ? Direction.up : Direction.left;
+        Debug.Log("shoot Move And Pop");
         ShootPlayer();
     }
-
-    private void MovePlayer(Direction direction)
-    {
-        trail.gameObject.SetActive(false);
-        
-        Vector3 moveDirection = direction == Direction.up ? Vector3.up : direction == Direction.right ? Vector3.right : direction == Direction.down ? Vector3.down : Vector3.left;
-        isMoving = true;
-        startPos = transform.position;
-        targetPos = startPos + moveDirection;
-        float distance = Vector3.Magnitude(targetPos - startPos);
-
-        transform.DOMove(targetPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
-        {
-            if (!isInTouch) MoveAndPop();
-            isMoving = false;
-        });
-    }
-
     private void ShootPlayer()
     {
-        trail.gameObject.SetActive(true);
-        isMoving = true;
-        startPos = transform.position;
-       
+        // TODO NEED TO MAKE IT BETTER
+
+        // isMoving = true;
+        Debug.Log("shootDirection : "+shootDirection);
+        Debug.Log("shoot ShootPlayer");
+        trail.SetActive(true);
+
+        posX = Mathf.RoundToInt(transform.position.x);
+        posY = Mathf.RoundToInt(transform.position.y);
+        posZ = Mathf.RoundToInt(transform.position.z);
+
+        startPos = new Vector3(posX, posY , posZ);
+
         Vector3 shootDirVector = shootDirection == Direction.up ? Vector3.up : shootDirection == Direction.right ? Vector3.right : shootDirection == Direction.down ? Vector3.down : Vector3.left;
-
-        var targetBall = GetTargetBall();
-
-        if (targetBall == null)
+        
+         var targetBall = GetTargetBall();
+       
+        if (targetBall is null )
         { 
+            Debug.Log("shoot null");
             SoundManager.Play(AudioClips.move);
             transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
             {
                 isMoving = false;
                 Debug.Log(" manager.gridSizeX / speed " + manager.gridSizeX / speed);
-                trail.gameObject.SetActive(false);
+                trail.SetActive(false);
             });
-
+            Taptic.Medium();
             return;
         }
 
+        Debug.Log("shoot ball color : " + targetBall.GetComponent<SpriteRenderer>().sprite.name);
         if (targetBall.color != color)
-        {  
+        {
+            Debug.Log("shoot not same color");
             float distanceTarget = Vector3.Magnitude(targetBall.transform.position - startPos);
             trail.transform.DOScale(0.5f, 0.2f).SetEase(Ease.InBounce);
-
             AnimateSquish(targetBall, distanceTarget, shootDirection);
             AnimateBouncingBall(targetBall);
-
+            Taptic.Medium();
             return;
         }
-
 
         Ball distantBall = targetBall;
         manager.ballsToDestroy.Clear();
         manager.CheckBalls(targetBall);
 
-        while (targetBall != null)
+        while (targetBall  is not  null)
         {
+            Taptic.Medium();
             targetBall = GetTargetBall();
-            if (targetBall == null) break;
+            if (targetBall is null) break;
 
             if (targetBall.color != color) break;
             manager.CheckBalls(targetBall);
@@ -177,12 +180,13 @@ public class PlayerManager : Singleton<PlayerManager>
  
         manager.DestroyBalls();
         SoundManager.Play(AudioClips.button);
+
         manager.winLevel();
         trail.gameObject.SetActive(true);
 
         float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
 
-        transform.DOMove(distantBall.transform.position, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+        tween =  transform.DOMove(distantBall.transform.position, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
         {
             if (BallShouldMoveForward(distantBall))
             {
@@ -191,20 +195,19 @@ public class PlayerManager : Singleton<PlayerManager>
 
                     transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / (speed * dist)).SetEase(Ease.Linear).OnComplete(() =>
                     {
-                        trail.gameObject.SetActive(false);
+                        trail.SetActive(false);
                         manager.DestroyBalls();
-                        isMoving = false;
+                        // isMoving = false;
                     });
-
             }
 
             else
             {
-                transform.DOMove(startPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
+                tween =  transform.DOMove(startPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
                 {
-                    trail.gameObject.SetActive(false);
+                    trail.SetActive(false);
                     isMoving = false;
-                    changeColor();
+                    //changeColor();
                 });
             }
         });
@@ -212,6 +215,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private bool BallShouldMoveForward(Ball ball)
     {
+        isMoving = false;
         switch (shootDirection)
         {
             case Direction.right:
@@ -221,7 +225,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int i = ball.x + 1; i < manager.gridSizeX; i++)
                 {
                     Ball b = manager.ballGrid[i, (int)transform.position.y];
-                    if (b == null || b.color == color) continue;
+                    if (b is null || b.color == color) continue;
 
                     return false;
                 }
@@ -235,7 +239,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int i = ball.x - 1; i >= 0; i--)
                 {
                     Ball b = manager.ballGrid[i, (int)transform.position.y];
-                    if (b == null || b.color == color) continue;
+                    if (b is null || b.color == color) continue;
  
                     return false;
                 }
@@ -249,7 +253,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int i = ball.y + 1; i < manager.gridSizeY; i++)
                 {
                     Ball b = manager.ballGrid[(int)transform.position.x, i];
-                    if (b == null || b.color == color) continue;
+                    if (b is null || b.color == color) continue;
                    
                     return false;
                 }
@@ -263,7 +267,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 for (int i = ball.y - 1; i >= 0; i--)
                 {
                     Ball b = manager.ballGrid[(int)transform.position.x, i];
-                    if (b == null || b.color == color) continue;
+                    if (b is null || b.color == color) continue;
                    
                     return false;
                 }
@@ -274,61 +278,109 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private Ball GetTargetBall()
     {
-
+        Debug.Log("get targetball ");
+        
         switch (shootDirection)
         {
             case Direction.up:
+                
+                Debug.Log("get targetball up ");
                 for (int y = 0; y < manager.gridSizeY; y++)
                 {
+                  
+                    Debug.Log("get ______________ " + (int)transform.position.x);
+                   
+                    
                     Ball ball = manager.ballGrid[(int)transform.position.x, y];
-                    if (ball != null && !manager.ballsToDestroy.Contains(ball))
-                        
-                        return ball;  
+                    print("get  manager.ballGrid");
+                    
+                    if (ball is null)
+                    {
+                        print("get ball null");
+                        continue;
+                    }
+                    
+                    if (manager.ballsToDestroy.Contains(ball)) continue;
+                    Debug.Log("get return ball up "+ ball.GetComponent<SpriteRenderer>().sprite.name);  return ball;
                 }
-     
+                Debug.Log("get ballsToDestroy ");
                 break;
+            
+            
 
             case Direction.right:
+                
+                Debug.Log("get targetball right ");
                 for (int x = 0; x < manager.gridSizeX; x++)
                 {
+                    Debug.Log($"get ______________ {x}, {(int)transform.position.y}");
+                    
+                    
                     Ball ball = manager.ballGrid[x, (int)transform.position.y];
-                    if (ball != null && !manager.ballsToDestroy.Contains(ball))
-                       
-                    return ball;
-    
+                    if (ball is null) 
+                    {
+                        print("get ball null");
+                        continue;
+                    }
+                    
+                    Debug.Log($"ball: {ball.x}, {ball.y}");
+                    if (manager.ballsToDestroy.Contains(ball)) continue;
+                    Debug.Log("get return ball right " + ball.GetComponent<SpriteRenderer>().sprite.name);  return ball;
                 }
+                Debug.Log("get ballsToDestroy ");
                 break;
 
             case Direction.down:
+                
+                Debug.Log("get targetball down");
                 for (int y = manager.gridSizeY - 1; y >= 0; y--)
                 {
+                    Debug.Log("get ______________ " + (int)transform.position.x);
+                    
+                    
                     Ball ball = manager.ballGrid[(int)transform.position.x, y];
-                    if (ball != null && !manager.ballsToDestroy.Contains(ball))
-                       
-                    return ball;
-                  
+                    if (ball is null) 
+                    {
+                        print("get ball null");
+                        continue;
+                    }
+                    if (manager.ballsToDestroy.Contains(ball)) continue;
+                    Debug.Log("get return ball down " + ball.GetComponent<SpriteRenderer>().sprite.name);  return ball;
+                    
                 }
+                Debug.Log("get ballsToDestroy ");
                 break;
+            
 
             case Direction.left:
+                
+                Debug.Log("get targetball left");
                 for (int x = manager.gridSizeX - 1; x >= 0; x--)
                 {
+                    Debug.Log("get ______________ " + (int)transform.position.y);
+                 
+                    
                     Ball ball = manager.ballGrid[x, (int)transform.position.y];
-                    if (ball != null && !manager.ballsToDestroy.Contains(ball))
-                        
-                    return ball;
-
+                    if (ball is null) 
+                    {
+                        print("get ball null");
+                        continue;
+                    }
+                    if (manager.ballsToDestroy.Contains(ball)) continue;
+                    Debug.Log("get return ball left" + ball.GetComponent<SpriteRenderer>().sprite.name) ;  return ball;
+                   
                 }
-
+                Debug.Log("get ballsToDestroy ");
                 break;
         }
-
+       
         return null;
     }
 
 
     private async void changeColor()
     {
+        
         color = Random.Range(0, manager.sprites.Length);
         await Task.Delay(500);
 
@@ -366,11 +418,12 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void AnimateBouncingBall(Ball ball)
     {
+
         int ballDist = shootDirection == Direction.left ? manager.gridSizeX - ball.x: shootDirection == Direction.right ? ball.x : shootDirection == Direction.down ? manager.gridSizeY - ball.y : ball.y;
 
-        ball.transform.DOScale(0.8f, ballDist / speed).SetDelay(ballDist / speed).SetEase(Ease.InBounce).OnComplete(() =>
+        tween =  ball.transform.DOScale(0.8f, ballDist / speed).SetDelay(ballDist / speed).SetEase(Ease.InBounce).OnComplete(() =>
         {
-            ball.transform.DOScale(1f, 0.1f).SetEase(Ease.OutBounce);
+            tween =  ball.transform.DOScale(1f, 0.1f).SetEase(Ease.OutBounce);
         });
 
     }
@@ -379,43 +432,43 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         Vector3 target = targetBall.color == color ? targetBall.transform.position : targetBall.transform.position + (shootDirection == Direction.left ? Vector3.right *0.75f : shootDirection == Direction.right ? Vector3.left * 0.75f : shootDirection == Direction.down ? Vector3.up * 0.75f : Vector3.down * 0.75f);
 
-        transform.DOMove(target, distanceTarget / speed).SetEase(Ease.Linear).OnComplete(() =>
+        tween = transform.DOMove(target, distanceTarget / speed).SetEase(Ease.Linear).OnComplete(() =>
         {
             SoundManager.Play(AudioClips.noAvailableMove);
 
-            transform.DOMove(startPos, distanceTarget / speed).SetEase(Ease.Linear).SetDelay(0.1f).OnComplete(() =>
-            {
-                transform.DOScale(1f, 0.2f).SetEase(Ease.OutBounce);
+            tween = transform.DOMove(startPos, distanceTarget / speed).SetEase(Ease.Linear).SetDelay(0.1f).OnComplete(() =>
+            { 
+                tween = transform.DOScale(1f, 0.2f).SetEase(Ease.OutBounce);
                 isMoving = false;
                 
-                changeColor();
+                //changeColor();
             });
 
             if (direction == Direction.up || direction == Direction.down)
             {
-                transform.DOScaleY(0.8f, 1 / speed).SetEase(Ease.InBounce).OnComplete(() =>
+                tween =  transform.DOScaleY(0.8f, 1 / speed).SetEase(Ease.InBounce).OnComplete(() =>
                 {
-                    transform.DOScaleY(1f, 1 / speed).SetEase(Ease.InBounce);
+                    tween =    transform.DOScaleY(1f, 1 / speed).SetEase(Ease.InBounce);
                 });
 
             } else
             {
-                transform.DOScaleX(0.8f, 1 / speed).SetEase(Ease.InBounce).OnComplete(() =>
+                tween = transform.DOScaleX(0.8f, 1 / speed).SetEase(Ease.InBounce).OnComplete(() =>
                 {
-                    transform.DOScaleX(1f, 1 / speed).SetEase(Ease.InBounce);
+                    tween =   transform.DOScaleX(1f, 1 / speed).SetEase(Ease.InBounce);
                 });
             }
         });
 
         if (direction == Direction.up || direction == Direction.down)
         {
-            transform.DOScaleX(0.8f, distanceTarget / speed).SetEase(Ease.InBounce);
-            transform.DOScaleY(1.29f, distanceTarget / speed).SetEase(Ease.InBounce);
+            tween =    transform.DOScaleX(0.8f, distanceTarget / speed).SetEase(Ease.InBounce);
+            tween = transform.DOScaleY(1.29f, distanceTarget / speed).SetEase(Ease.InBounce);
         }
         else
         {
-            transform.DOScaleX(1.29f, distanceTarget / speed).SetEase(Ease.InBounce);
-            transform.DOScaleY(0.8f, distanceTarget / speed).SetEase(Ease.InBounce);
+            tween =   transform.DOScaleX(1.29f, distanceTarget / speed).SetEase(Ease.InBounce);
+            tween = transform.DOScaleY(0.8f, distanceTarget / speed).SetEase(Ease.InBounce);
         }
     }
 

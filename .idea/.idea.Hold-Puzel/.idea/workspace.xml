@@ -2,18 +2,160 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5467d855-3c55-456e-afe8-e0aeb39ddce1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/Archive.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/Archive.zip.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.bundle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.bundle.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.dll.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.so.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-10_1_0.bundle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-10_1_0.bundle.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-10_1_0.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-10_1_0.dll.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-10_1_0.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-10_1_0.so.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppRemoteConfig.bundle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppRemoteConfig.bundle.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppRemoteConfig.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppRemoteConfig.dll.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppRemoteConfig.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Firebase/Plugins/x86_64/FirebaseCppRemoteConfig.so.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/Artboard 7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/Artboard 7.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/Asset 2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/Asset 2.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/Asset 27.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/Asset 27.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/Asset 28.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/Asset 28.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/UI.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/UI/Charlie Kingdom.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/UI/Charlie Kingdom.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/UI/goalBox.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/UI/goalBox.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/coin.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/coin.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 1.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 10.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 3.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 4.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 5.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 6.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/enum_games_Asset 9.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/flare.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/flare.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/plus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/plus.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/rocket 1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/rocket 1.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/tile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/tile.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/win.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/win.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/working-hours.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Art/working-hours.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Avatar.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Avatar.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/CoinManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/CoinManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/GameManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/GameManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/JumpingStar.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/JumpingStar.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/ProfileFlag.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/ProfileFlag.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/ProfileFrame.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/ProfileFrame.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/Asset 12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/Asset 12.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/LeaderBoard.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/LeaderBoard.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/LeaderBoardYouCell.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/LeaderBoardYouCell.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/Player.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/Player.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/ScoreManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/ScoreManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/StarManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/StarManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/Text.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/Text/users.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/Text/users.txt.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/ThemeManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/ThemeManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/TopChart.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/TopChart.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/flags.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/flags/bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/flags/bg.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/flags/cu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/flags/cu.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/flags/cz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/flags/cz.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/flags/hk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/flags/hk.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/leaderboardCoinPrefab.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/leaderboardCoinPrefab.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/leaderboardStarPrefab.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/leaderboardStarPrefab.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/star.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Resources/star.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/LeadeboardJumpingStar.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/LeadeboardJumpingStar.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/LeaderboardCell.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/LeaderboardCell.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/LeaderboardJumpingCoin.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/LeaderboardJumpingCoin.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/LeaderboardManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/LeaderboardManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/LeaderboardYouCell.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/LeaderboardYouCell.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/TopChartManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/TopChartManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/WeeklyContestManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/Scripts/LeaderBoard/WeeklyContestManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/UIManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Game/UIManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ProfileManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ProfileManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Hold-Puzel/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hold-Puzel/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/mainTemplate.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Android/mainTemplate.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/_Prefabs/Balls/Ball.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/_Prefabs/Balls/Ball.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/_Prefabs/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/_Prefabs/Player/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/_Scene/Scene 1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/_Scene/Scene 1.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/_Scripts/Manager/GridManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Manager/GridManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/_Scripts/Manager/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Manager/UIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/_Scripts/Manager/UIManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/_Scripts/Manager/UIManager.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/AndroidResolverDependencies.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/AndroidResolverDependencies.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remote_config_data" beforeDir="false" afterPath="$PROJECT_DIR$/remote_config_data" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1588c740f0bf425e9cee2e65d80c07e7469000/89/e87ff479/WaitHandle.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1588c740f0bf425e9cee2e65d80c07e7469000/c5/59fef115/Void.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -31,6 +173,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.27727273&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -54,10 +197,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="78545">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="78545" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -75,6 +218,10 @@
       <updated>1667298792386</updated>
       <workItem from="1667298798622" duration="4283000" />
       <workItem from="1668679662023" duration="904000" />
+      <workItem from="1669803749697" duration="5051000" />
+      <workItem from="1669809967333" duration="9285000" />
+      <workItem from="1669879778122" duration="22329000" />
+      <workItem from="1670225937665" duration="10311000" />
     </task>
     <servers />
   </component>
@@ -97,5 +244,370 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>318</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="318" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="10929" />
+            </startOffsets>
+            <endOffsets>
+              <option value="10984" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>327</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="327" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11324" />
+              <option value="11412" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11410" />
+              <option value="11424" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>334</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="334" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11583" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11616" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>335</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="335" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11633" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11681" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>337</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="337" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11720" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11781" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>340</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="340" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11848" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11903" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>347</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="347" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="12162" />
+              <option value="12249" />
+            </startOffsets>
+            <endOffsets>
+              <option value="12247" />
+              <option value="12261" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>356</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="356" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="12454" />
+            </startOffsets>
+            <endOffsets>
+              <option value="12487" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>357</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="357" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="12504" />
+            </startOffsets>
+            <endOffsets>
+              <option value="12552" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>359</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="359" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="12591" />
+            </startOffsets>
+            <endOffsets>
+              <option value="12652" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>362</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="362" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="12716" />
+            </startOffsets>
+            <endOffsets>
+              <option value="12771" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>369</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="369" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="13030" />
+              <option value="13117" />
+            </startOffsets>
+            <endOffsets>
+              <option value="13115" />
+              <option value="13129" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>372</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="372" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="13184" />
+            </startOffsets>
+            <endOffsets>
+              <option value="13217" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>312</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="310" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="10662" />
+            </startOffsets>
+            <endOffsets>
+              <option value="10697" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>313</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="311" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="10714" />
+            </startOffsets>
+            <endOffsets>
+              <option value="10757" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>314</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="312" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="10774" />
+            </startOffsets>
+            <endOffsets>
+              <option value="10775" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>315</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="313" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="10796" />
+            </startOffsets>
+            <endOffsets>
+              <option value="10862" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>319</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="317" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11005" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11022" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>320</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="318" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11044" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11045" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>321</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="319" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11070" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11093" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>322</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="320" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11118" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11127" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>323</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="321" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11148" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11149" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>325</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="323" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11191" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11230" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>326</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="324" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11251" />
+              <option value="11294" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11293" />
+              <option value="11303" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>328</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="326" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11441" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11442" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>329</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="327" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11459" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11492" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs</url>
+          <line>330</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Resources/_Scripts/Player/PlayerManager.cs" initialLine="328" containingFunctionPresentation="method 'GetTargetBall'">
+            <startOffsets>
+              <option value="11509" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11515" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

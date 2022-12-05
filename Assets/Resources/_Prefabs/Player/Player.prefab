@@ -238,10 +238,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a2c894028620435daadfa48f91fee4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveScore: 0
+  isMoving: 0
+  isInTouch: 0
+  moveCounter: 0
   startPos: {x: -1, y: -1, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
   shootDirection: 0
-  speed: 10
+  speed: 8
   lastPos: {x: 0, y: 0, z: 0}
   trail: {fileID: 4717782667326274888}
