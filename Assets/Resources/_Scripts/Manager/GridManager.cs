@@ -30,6 +30,24 @@ public class GridManager : Singleton<GridManager>
 
     void Awake()
     {
+        
+       
+        
+
+    }
+
+    void Start()
+    {
+        IntPlayer();
+        IntGrid();
+
+        Camera.main.transform.position = new Vector3(transform.position.x + gridSizeX / 2, (transform.position.y + gridSizeY / 2), -10);
+        Camera.main.orthographicSize = gridSizeX + (Screen.height / Screen.width > 1.77 ? 1.5f : 0);
+
+    }
+
+    public void IntPlayer()
+    {
         width = gridSizeX;
         height = gridSizeY;
 
@@ -52,19 +70,8 @@ public class GridManager : Singleton<GridManager>
             }
         }
 
-        Camera.main.transform.position = new Vector3(transform.position.x + gridSizeX / 2, (transform.position.y + gridSizeY / 2), -10);
-        Camera.main.orthographicSize = gridSizeX + (Screen.height / Screen.width > 1.77 ? 1.5f : 0);
-
-
-
     }
-
-    void Start()
-    {
-        creatGrid();
-    }
-
-    public void creatGrid()
+    public void IntGrid()
     {
         
 
@@ -133,7 +140,7 @@ public class GridManager : Singleton<GridManager>
             Debug.Log("You Win");
             SoundManager.Play(AudioClips.victory);
 
-            await Task.Delay(2000); 
+            await Task.Delay(2300); 
             UIManager.Instance.setTransition(Views.leaderboard);
             UIManager.Instance.topPanel.SetActive(false);
             gameObject.SetActive(false);

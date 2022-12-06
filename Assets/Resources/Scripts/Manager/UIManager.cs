@@ -108,7 +108,10 @@ public class UIManager : Singleton<UIManager> {
 
         GridManager.Instance.gameObject.SetActive(true);
         PlayerManager.Instance.gameObject.SetActive(true);
-        GridManager.Instance.creatGrid();
+        PlayerManager.Instance.transform.position = new Vector3(-1f,-1f,0f);
+
+        GridManager.Instance.IntGrid();
+        
         UIManager.Instance.topPanel.SetActive(true);
         ScoreManager.Instance.Reset();
        
