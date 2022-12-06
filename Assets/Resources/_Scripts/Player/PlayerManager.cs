@@ -24,6 +24,10 @@ public class PlayerManager : Singleton<PlayerManager>
     SpriteRenderer spriteRenderer;
     int color;
 
+    int splittedScreen = Screen.width / 3;
+
+
+
     void Start()
     {
         moveCounter = 0;
@@ -65,26 +69,54 @@ public class PlayerManager : Singleton<PlayerManager>
         else if (transform.position.x == manager.gridSizeX && transform.position.y > -1) direction = Direction.down;
         else direction = Direction.left;
 
-        if (Input.GetMouseButtonUp(0)) isInTouch = false;
+        if (Input.GetMouseButtonUp(0))
+        {
+            isInTouch = false;
+            Debug.Log("= button Up ");
+        }
+        
 
         if (isMoving) return;
 
         if (Input.GetMouseButton(0))
         {
+            if (Input.mousePosition.x >= 2 * splittedScreen)
+            {
+                Debug.Log("right");
+                speed = 15;
+            }
+
+            if (Input.mousePosition.x >= splittedScreen &&
+                Input.mousePosition.x < 2 * splittedScreen)
+            {
+                Debug.Log("Middle");
+                speed = 8;
+            }
+
+            if (Input.mousePosition.x < splittedScreen)
+            {
+                Debug.Log("left");
+                speed = 5;
+            }
+
             isInTouch = true;
+            Debug.Log("= button Down ");
             MovePlayer(direction);
         }
     }
 
     private void MoveAndPop()
     {
-        
-        if (transform.position.x == -1 && transform.position.y == -1) return;
-        else if (transform.position.x == -1 && transform.position.y == manager.gridSizeY) return;
-        else if (transform.position.x == manager.gridSizeX && transform.position.y == -1) return;
-        else if (transform.position.x == manager.gridSizeX && transform.position.y == manager.gridSizeY) return;
+
+
+        if (transform.position.x == -1 && transform.position.y == -1) { isMoving = false; return; }
+        else if (transform.position.x == -1 && transform.position.y == manager.gridSizeY) { isMoving = false; return; }
+        else if (transform.position.x == manager.gridSizeX && transform.position.y == -1) { isMoving = false; return; }
+        else if (transform.position.x == manager.gridSizeX && transform.position.y == manager.gridSizeY) { isMoving = false; return; }
 
         moveCounter++;
+
+        Debug.Log("= MoveAndPop : " + direction);
 
         lastPos = new Vector3(transform.position.x,transform.position.y,transform.position.z);
         shootDirection = direction == Direction.up ? Direction.right : direction == Direction.right ? Direction.down : direction == Direction.left ? Direction.up : Direction.left;
@@ -93,10 +125,12 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void MovePlayer(Direction direction)
     {
+        isMoving = true;
         trail.gameObject.SetActive(false);
         
         Vector3 moveDirection = direction == Direction.up ? Vector3.up : direction == Direction.right ? Vector3.right : direction == Direction.down ? Vector3.down : Vector3.left;
-        isMoving = true;
+
+        Debug.Log("= MoveAndPop : " );
         startPos = transform.position;
         targetPos = startPos + moveDirection;
         float distance = Vector3.Magnitude(targetPos - startPos);
@@ -104,12 +138,15 @@ public class PlayerManager : Singleton<PlayerManager>
         transform.DOMove(targetPos, distance / speed).SetEase(Ease.Linear).OnComplete(() =>
         {
             if (!isInTouch) MoveAndPop();
-            isMoving = false;
+            else isMoving = false;
         });
     }
 
     private void ShootPlayer()
     {
+
+        Debug.Log("= ShootPlayer : ");
+
         trail.gameObject.SetActive(true);
         isMoving = true;
         startPos = transform.position;
@@ -212,11 +249,12 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private bool BallShouldMoveForward(Ball ball)
     {
+      
         switch (shootDirection)
         {
             case Direction.right:
 
-                Debug.Log("right free");
+                Debug.Log("=  Move Forward : " + direction);
 
                 for (int i = ball.x + 1; i < manager.gridSizeX; i++)
                 {
@@ -230,7 +268,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
             case Direction.left:
 
-                Debug.Log("left free");
+                Debug.Log("=  Move Forward : " + direction);
 
                 for (int i = ball.x - 1; i >= 0; i--)
                 {
@@ -244,7 +282,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
             case Direction.up:
 
-                Debug.Log("up free");
+                Debug.Log("=  Move Forward : " + direction);
 
                 for (int i = ball.y + 1; i < manager.gridSizeY; i++)
                 {
@@ -258,7 +296,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
             case Direction.down:
 
-                Debug.Log("down free");
+                Debug.Log("=  Move Forward : " + direction);
 
                 for (int i = ball.y - 1; i >= 0; i--)
                 {
@@ -274,10 +312,11 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private Ball GetTargetBall()
     {
-
+       
         switch (shootDirection)
         {
             case Direction.up:
+                Debug.Log("=  Get Target Ball : " + shootDirection);
                 for (int y = 0; y < manager.gridSizeY; y++)
                 {
                     Ball ball = manager.ballGrid[(int)transform.position.x, y];
@@ -289,6 +328,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 break;
 
             case Direction.right:
+                Debug.Log("=  Get Target Ball : " + shootDirection);
                 for (int x = 0; x < manager.gridSizeX; x++)
                 {
                     Ball ball = manager.ballGrid[x, (int)transform.position.y];
@@ -300,6 +340,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 break;
 
             case Direction.down:
+                Debug.Log("=  Get Target Ball : " + shootDirection);
                 for (int y = manager.gridSizeY - 1; y >= 0; y--)
                 {
                     Ball ball = manager.ballGrid[(int)transform.position.x, y];
@@ -311,6 +352,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 break;
 
             case Direction.left:
+                Debug.Log("=  Get Target Ball : " + shootDirection);
                 for (int x = manager.gridSizeX - 1; x >= 0; x--)
                 {
                     Ball ball = manager.ballGrid[x, (int)transform.position.y];
@@ -418,6 +460,8 @@ public class PlayerManager : Singleton<PlayerManager>
             transform.DOScaleY(0.8f, distanceTarget / speed).SetEase(Ease.InBounce);
         }
     }
+
+
 
 
 }
