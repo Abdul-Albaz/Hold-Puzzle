@@ -9,7 +9,8 @@ using Random = UnityEngine.Random;
 public class PlayerManager : Singleton<PlayerManager>
 {
     bool isMoving;
-    bool isInTouch = false;
+    public bool inMoveAndPop ;
+    [SerializeField] private bool isInTouch = false;
     public int moveCounter;
 
     public Vector3 startPos, targetPos;
@@ -30,6 +31,8 @@ public class PlayerManager : Singleton<PlayerManager>
 
     void Start()
     {
+        inMoveAndPop = false;
+
         moveCounter = 0;
         trail.gameObject.SetActive(false);
         direction = Direction.up;
@@ -64,12 +67,12 @@ public class PlayerManager : Singleton<PlayerManager>
 
     void Update()
     {
-        if (transform.position.x == -1 && transform.position.y < manager.gridSizeY) direction = Direction.up;
-        else if (transform.position.x < manager.gridSizeX && transform.position.y == manager.gridSizeY) direction = Direction.right;
-        else if (transform.position.x == manager.gridSizeX && transform.position.y > -1) direction = Direction.down;
-        else direction = Direction.left;
+        if (transform.position.x == -1 && transform.position.y < manager.gridSizeY) { direction = Direction.up; }
+        else if (transform.position.x < manager.gridSizeX && transform.position.y == manager.gridSizeY){ direction = Direction.right;}
+        else if (transform.position.x == manager.gridSizeX && transform.position.y > -1){ direction = Direction.down;}
+        else{direction = Direction.left; }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && inMoveAndPop == false)
         {
             isInTouch = false;
             Debug.Log("= button Up ");
@@ -80,6 +83,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (Input.GetMouseButton(0))
         {
+            // for Testing 
             if (Input.mousePosition.x >= 2 * splittedScreen)
             {
                 Debug.Log("right");
@@ -99,21 +103,21 @@ public class PlayerManager : Singleton<PlayerManager>
                 speed = 5;
             }
 
-            isInTouch = true;
-            Debug.Log("= button Down ");
-            MovePlayer(direction);
+        isInTouch = true;
+        Debug.Log("= button Down ");
+        MovePlayer();
+
         }
     }
 
     private void MoveAndPop()
     {
-
-
         if (transform.position.x == -1 && transform.position.y == -1) { isMoving = false; return; }
         else if (transform.position.x == -1 && transform.position.y == manager.gridSizeY) { isMoving = false; return; }
         else if (transform.position.x == manager.gridSizeX && transform.position.y == -1) { isMoving = false; return; }
         else if (transform.position.x == manager.gridSizeX && transform.position.y == manager.gridSizeY) { isMoving = false; return; }
 
+        if (inMoveAndPop ==false) inMoveAndPop = true;
         moveCounter++;
 
         Debug.Log("= MoveAndPop : " + direction);
@@ -123,14 +127,14 @@ public class PlayerManager : Singleton<PlayerManager>
         ShootPlayer();
     }
 
-    private void MovePlayer(Direction direction)
+    private void MovePlayer()
     {
         isMoving = true;
         trail.gameObject.SetActive(false);
         
         Vector3 moveDirection = direction == Direction.up ? Vector3.up : direction == Direction.right ? Vector3.right : direction == Direction.down ? Vector3.down : Vector3.left;
 
-        Debug.Log("= MoveAndPop : " );
+        Debug.Log("= MovePlayer : ");
         startPos = transform.position;
         targetPos = startPos + moveDirection;
         float distance = Vector3.Magnitude(targetPos - startPos);
@@ -144,7 +148,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void ShootPlayer()
     {
-
+        inMoveAndPop = false;
         Debug.Log("= ShootPlayer : ");
 
         trail.gameObject.SetActive(true);
@@ -160,9 +164,12 @@ public class PlayerManager : Singleton<PlayerManager>
             SoundManager.Play(AudioClips.move);
             transform.DOMove(startPos + shootDirVector * (manager.gridSizeX + 1), manager.gridSizeX / speed).SetEase(Ease.Linear).OnComplete(() =>
             {
+                Debug.Log("targetBall");
+
                 isMoving = false;
                 Debug.Log(" manager.gridSizeX / speed " + manager.gridSizeX / speed);
                 trail.gameObject.SetActive(false);
+
             });
 
             return;
@@ -175,7 +182,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
             AnimateSquish(targetBall, distanceTarget, shootDirection);
             AnimateBouncingBall(targetBall);
-
             return;
         }
 
@@ -232,7 +238,6 @@ public class PlayerManager : Singleton<PlayerManager>
                         manager.DestroyBalls();
                         isMoving = false;
                     });
-
             }
 
             else
@@ -241,10 +246,11 @@ public class PlayerManager : Singleton<PlayerManager>
                 {
                     trail.gameObject.SetActive(false);
                     isMoving = false;
-                    changeColor();
+                    //changeColor();
                 });
             }
         });
+  
     }
 
     private bool BallShouldMoveForward(Ball ball)
@@ -365,6 +371,8 @@ public class PlayerManager : Singleton<PlayerManager>
                 break;
         }
 
+       
+
         return null;
     }
 
@@ -372,7 +380,7 @@ public class PlayerManager : Singleton<PlayerManager>
     private async void changeColor()
     {
         color = Random.Range(0, manager.sprites.Length);
-        await Task.Delay(500);
+        await Task.Delay(100);
 
         spriteRenderer.sprite = manager.sprites[color];
 
@@ -430,7 +438,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 transform.DOScale(1f, 0.2f).SetEase(Ease.OutBounce);
                 isMoving = false;
                 
-                changeColor();
+                //changeColor();
             });
 
             if (direction == Direction.up || direction == Direction.down)

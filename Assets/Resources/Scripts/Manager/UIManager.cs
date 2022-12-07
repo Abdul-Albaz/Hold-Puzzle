@@ -10,6 +10,7 @@ public class UIManager : Singleton<UIManager> {
    
   
     [SerializeField] private GameObject levelEndUI;
+    [SerializeField] private GameObject settingUI;
 
     [SerializeField] public GameObject MovesBox;
     [SerializeField] public GameObject topPanel;
@@ -50,6 +51,16 @@ public class UIManager : Singleton<UIManager> {
         
     }
 
+
+    public void Setting()
+    {
+        settingUI.SetActive(true);
+    }
+
+    public void CloseSetting()
+    {
+        settingUI.SetActive(false);
+    }
     public void tappedMainMenu()
     {
        
