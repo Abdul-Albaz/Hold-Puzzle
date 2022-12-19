@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager> {
 
@@ -37,18 +38,9 @@ public class UIManager : Singleton<UIManager> {
 
     }
 
-
-    private void Awake()
-    {
-      
-    }
-
-
     public void tappedPlay()
     {
-        setTransition(Views.game);
-
-        
+        setTransition(Views.game); 
     }
 
 
@@ -61,6 +53,12 @@ public class UIManager : Singleton<UIManager> {
     {
         settingUI.SetActive(false);
     }
+
+    public void RestartGames()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void tappedMainMenu()
     {
        
@@ -72,24 +70,19 @@ public class UIManager : Singleton<UIManager> {
     private void goToMainMenu()
     {
       
-      
        // gameplayUI.SetActive(false);
     
     }
 
     public void toggleGameView()
     {
-        setTransition(Views.game);
-        
-       
+        setTransition(Views.game);  
     }
 
     public void setTransition(Views transition)
     {
-       
-           
-           
-//          gameplayUI.SetActive(false);
+
+      //    gameplayUI.SetActive(false);
             levelEndUI.SetActive(false);
 
             switch (transition)
@@ -101,7 +94,7 @@ public class UIManager : Singleton<UIManager> {
                     StartGame();
                     break;
                 case Views.map:
-                    ShowMap();
+                    //ShowMap();
                     break;
                 case Views.leaderboard:
                     ShowLevelEnd();
@@ -140,17 +133,6 @@ public class UIManager : Singleton<UIManager> {
     {
         levelEndUI.SetActive(true);
         LeaderboardManager.Instance.Enter();
-    }
-
-    private void ShowMap()
-    {
-        
-      
-    }
-
-    public void toggleLevelEndWindow(float duration = 0.5f, bool isTutorial = false)
-    {
-        
     }
 
 

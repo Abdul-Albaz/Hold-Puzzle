@@ -27,15 +27,6 @@ public class GridManager : Singleton<GridManager>
     public int height;
     public int score;
    
-
-    void Awake()
-    {
-        
-       
-        
-
-    }
-
     void Start()
     {
         IntPlayer();
@@ -62,6 +53,7 @@ public class GridManager : Singleton<GridManager>
             {
                 GameObject newTileGO = Instantiate(tilePrefab, orginSpawnPoint + new Vector3(x, y, 0), Quaternion.identity);
                 newTileGO.transform.parent = transform;
+
                 Tile newTile = newTileGO.GetComponent<Tile>();
                 tileGrid[x, y] = newTile;
                 newTile.x = x;
@@ -71,11 +63,9 @@ public class GridManager : Singleton<GridManager>
         }
 
     }
+
     public void IntGrid()
     {
-        
-
-
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = 0; y < gridSizeY; y++)
@@ -83,12 +73,14 @@ public class GridManager : Singleton<GridManager>
                 int color = Random.Range(0, sprites.Length);
                 Ball cellBall = Instantiate(ballPrefab, tileGrid[x, y].transform).GetComponent<Ball>();
 
+                
                 cellBall.x = x;
                 cellBall.y = y;
                 cellBall.color = color;
 
                 ballGrid[x, y] = cellBall;
                 balls.Add(cellBall);
+                //colorBalls.Add(cellBall.GetComponent<SpriteRenderer>());
 
             }
         }
@@ -96,20 +88,22 @@ public class GridManager : Singleton<GridManager>
 
     public void CheckBalls(Ball ball)
     {
-        FindBallsToDestroy(ball);
+        FindBallsToDestroy(ball);  
     }
 
     public void FindBallsToDestroy(Ball ball)
     {
         ballsToDestroy.Add(ball);
+       // colorBallsToDestroy.Add(ball.color);
 
         foreach (Ball neighbor in ball.neighbors)
         {
             if (neighbor.color == ball.color & !ballsToDestroy.Contains(neighbor))
             {
                 FindBallsToDestroy(neighbor);
+               
             }
-        } 
+        }
     }
 
     public void DestroyBalls()
@@ -126,12 +120,15 @@ public class GridManager : Singleton<GridManager>
             {
                 score++;
                 Debug.Log("Destroy");
-                ball.Destroy();              
+                ball.Destroy();     
             }
 
             balls.Remove(ball);
+           // colorBalls.Remove(ball.GetComponent<SpriteRenderer>());
         }
+
     }
+
 
     public async void winLevel()
     {
@@ -147,10 +144,6 @@ public class GridManager : Singleton<GridManager>
             PlayerManager.Instance.gameObject.SetActive(false);
         }
 
-       
-
-
-      
     }
 
 }

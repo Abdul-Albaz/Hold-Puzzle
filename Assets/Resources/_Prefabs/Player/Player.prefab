@@ -240,6 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inMoveAndPop: 0
   isInTouch: 0
+  shouldPop: 0
   moveCounter: 0
   startPos: {x: -1, y: -1, z: 0}
   targetPos: {x: 0, y: 0, z: 0}

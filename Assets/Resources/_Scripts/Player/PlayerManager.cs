@@ -29,7 +29,6 @@ public class PlayerManager : Singleton<PlayerManager>
     int splittedScreen = Screen.width / 3;
 
 
-
     void Start()
     {
         inMoveAndPop = false;
@@ -40,6 +39,7 @@ public class PlayerManager : Singleton<PlayerManager>
         color = Random.Range(0, manager.sprites.Length);
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = manager.sprites[color];
+
 
         switch (spriteRenderer.sprite.name)
         {
@@ -74,7 +74,8 @@ public class PlayerManager : Singleton<PlayerManager>
         else if (transform.position.x == manager.gridSizeX && transform.position.y > -1){ direction = Direction.down;}
         else{direction = Direction.left; }
 
-        if(Time.time - startTime < duration)
+
+        if (Time.time - startTime < duration)
         {
             if (Input.GetMouseButtonUp(0) && !inMoveAndPop)
             {
@@ -83,7 +84,6 @@ public class PlayerManager : Singleton<PlayerManager>
             }
         }
         
-
         else if (Input.GetMouseButton(0))
         {
             isInTouch = true;
@@ -93,24 +93,24 @@ public class PlayerManager : Singleton<PlayerManager>
 
 
             // for Testing 
-            //if (Input.mousePosition.x >= 2 * splittedScreen)
-            //{
-            //    Debug.Log("right");
-            //    speed = 15;
-            //}
+            if (Input.mousePosition.x >= 2 * splittedScreen)
+            {
+                Debug.Log("right");
+                speed = 15;
+            }
 
-            //if (Input.mousePosition.x >= splittedScreen &&
-            //    Input.mousePosition.x < 2 * splittedScreen)
-            //{
-            //    Debug.Log("Middle");
-            //    speed = 8;
-            //}
+            if (Input.mousePosition.x >= splittedScreen &&
+                Input.mousePosition.x < 2 * splittedScreen)
+            {
+                Debug.Log("Middle");
+                speed = 8;
+            }
 
-            //if (Input.mousePosition.x < splittedScreen)
-            //{
-            //    Debug.Log("left");
-            //    speed = 5;
-            //}
+            if (Input.mousePosition.x < splittedScreen)
+            {
+                Debug.Log("left");
+                speed = 5;
+            }
 
         }
       
@@ -123,7 +123,7 @@ public class PlayerManager : Singleton<PlayerManager>
         else if (transform.position.x == manager.gridSizeX && transform.position.y == -1) { isMoving = false; return; }
         else if (transform.position.x == manager.gridSizeX && transform.position.y == manager.gridSizeY) { isMoving = false; return; }
 
-        if (inMoveAndPop ==false) inMoveAndPop = true;
+        if (inMoveAndPop == false) inMoveAndPop = true;
         moveCounter++;
 
         Debug.Log("= MoveAndPop : " + direction);
@@ -158,7 +158,6 @@ public class PlayerManager : Singleton<PlayerManager>
     }
 
 
-
     private void ShootPlayer()
     {
         inMoveAndPop = false;
@@ -171,6 +170,7 @@ public class PlayerManager : Singleton<PlayerManager>
         Vector3 shootDirVector = shootDirection == Direction.up ? Vector3.up : shootDirection == Direction.right ? Vector3.right : shootDirection == Direction.down ? Vector3.down : Vector3.left;
 
         var targetBall = GetTargetBall();
+
 
         if (targetBall == null)
         { 
@@ -188,6 +188,7 @@ public class PlayerManager : Singleton<PlayerManager>
             return;
         }
 
+
         if (targetBall.color != color)
         {  
             float distanceTarget = Vector3.Magnitude(targetBall.transform.position - startPos);
@@ -203,6 +204,7 @@ public class PlayerManager : Singleton<PlayerManager>
         manager.ballsToDestroy.Clear();
         manager.CheckBalls(targetBall);
 
+
         while (targetBall != null)
         {
             targetBall = GetTargetBall();
@@ -212,6 +214,7 @@ public class PlayerManager : Singleton<PlayerManager>
             manager.CheckBalls(targetBall);
         }
 
+
         foreach (Ball ball in manager.ballsToDestroy)
         {
             switch (shootDirection)
@@ -219,22 +222,28 @@ public class PlayerManager : Singleton<PlayerManager>
                 case Direction.up:
                     if (ball.x == distantBall.x & ball.y> distantBall.y) distantBall = ball;
                     break;
+
                 case Direction.right:
                     if (ball.x > distantBall.x & ball.y == distantBall.y) distantBall = ball;
                     break;
+
                 case Direction.down:
                     if (ball.x == distantBall.x & ball.y < distantBall.y) distantBall = ball;
                     break;
+
                 case Direction.left:
                     if (ball.x < distantBall.x & ball.y == distantBall.y) distantBall = ball;
                     break;
             }
         }
+
  
         manager.DestroyBalls();
 
         SoundManager.Play(AudioClips.button);
+
         manager.winLevel();
+
         trail.gameObject.SetActive(true);
 
         float distance = Vector3.Magnitude(distantBall.transform.position - startPos);
@@ -335,6 +344,7 @@ public class PlayerManager : Singleton<PlayerManager>
        
         switch (shootDirection)
         {
+
             case Direction.up:
                 Debug.Log("=  Get Target Ball : " + shootDirection);
                 for (int y = 0; y < manager.gridSizeY; y++)
@@ -346,6 +356,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 }
      
                 break;
+
 
             case Direction.right:
                 Debug.Log("=  Get Target Ball : " + shootDirection);
@@ -359,6 +370,7 @@ public class PlayerManager : Singleton<PlayerManager>
                 }
                 break;
 
+
             case Direction.down:
                 Debug.Log("=  Get Target Ball : " + shootDirection);
                 for (int y = manager.gridSizeY - 1; y >= 0; y--)
@@ -370,6 +382,7 @@ public class PlayerManager : Singleton<PlayerManager>
                   
                 }
                 break;
+
 
             case Direction.left:
                 Debug.Log("=  Get Target Ball : " + shootDirection);
@@ -385,21 +398,40 @@ public class PlayerManager : Singleton<PlayerManager>
 
                 break;
         }
-
-       
-
         return null;
+    }
+
+
+    public void FindBallsToDestroy(Ball ball)
+    {
+
+
+        manager.ballsToDestroy.Add(ball);
+
+        foreach (Ball neighbor in ball.neighbors)
+        {
+            if (neighbor.color == ball.color & !manager.ballsToDestroy.Contains(neighbor))
+            {
+                FindBallsToDestroy(neighbor);
+            }
+        }
+
+
     }
 
 
     private async void changeColor()
     {
-        color = Random.Range(0, manager.sprites.Length);
+
+        color = Random.Range(0, 5);
+
+    
         await Task.Delay(100);
 
         spriteRenderer.sprite = manager.sprites[color];
 
         // Trail Color
+
         switch (spriteRenderer.sprite.name)
         {
             case "red":
@@ -418,14 +450,14 @@ public class PlayerManager : Singleton<PlayerManager>
                 color = 4;
                 break;
         }
-
+        
         trail.GetComponent<TrailRenderer>().endColor = GridManager.Instance.colorIndex[color];
         trail.GetComponent<TrailRenderer>().startColor = GridManager.Instance.colorIndex[color];
     }
 
     private void HandleCollision(Ball ball)
     {
-        //Todo changeColor();
+        // Todo changeColor();
     }
 
 
