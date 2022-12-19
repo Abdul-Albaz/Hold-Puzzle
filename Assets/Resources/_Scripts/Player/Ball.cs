@@ -39,6 +39,8 @@ public class Ball : MonoBehaviour
         if (x > 0) neighbors.Add(manager.ballGrid[x - 1, y]);
 
         if (x < manager.width - 1) neighbors.Add(manager.ballGrid[x + 1, y]);
+
+       
     }
 
 

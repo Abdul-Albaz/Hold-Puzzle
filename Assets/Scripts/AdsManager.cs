@@ -122,10 +122,10 @@ public class AdsManager : Singleton<AdsManager>
     {
         public static class Android
         {
-            public static string app = "ca-app-pub-1638526051519794~9183469575";
-            public static string rewarded = "ca-app-pub-1638526051519794/1802156000";
-            public static string interstitial = "ca-app-pub-1638526051519794/9608493833";
-            public static string banner = "ca-app-pub-1638526051519794/6220408004";
+            public static string app = "ca-app-pub-1638526051519794~8073456821";
+            public static string rewarded = "ca-app-pub-1638526051519794/4498664584";
+            public static string interstitial = "ca-app-pub-1638526051519794/5021408763";
+            public static string banner = "ca-app-pub-1638526051519794/5960684408";
 
             //public static string rewarded = "ca-app-pub-3940256099942544/5224354917";
             //public static string interstitial = "ca-app-pub-3940256099942544/1033173712";
