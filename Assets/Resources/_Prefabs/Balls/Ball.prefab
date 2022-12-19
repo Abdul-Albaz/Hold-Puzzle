@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7895552821934055274}
   - component: {fileID: 7073316218030415147}
   - component: {fileID: 2818834059731446886}
+  - component: {fileID: 3073809286653100901}
   m_Layer: 0
   m_Name: Ball
   m_TagString: blueBall
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5711490264790301945}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.01}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -106,3 +107,24 @@ MonoBehaviour:
   explosionParticle: {fileID: 153674, guid: 05ed38dc544db48c29c22e3bf2a9bd11, type: 3}
   splatterParticle: {fileID: 286697769406427581, guid: 617378de28fbaa64c96485d5b0d9169b, type: 3}
   ringParticle: {fileID: 163286, guid: 748acba4d669a3d428ab650f3763a5ab, type: 3}
+  animator: {fileID: 3073809286653100901}
+--- !u!95 &3073809286653100901
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5711490264790301945}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f342b60c3b50b4438b8f0e7ae4d109c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

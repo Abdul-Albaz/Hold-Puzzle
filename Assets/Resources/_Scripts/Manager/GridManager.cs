@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
-
 public class GridManager : Singleton<GridManager>
 {
     public int gridSizeX;
@@ -27,8 +26,27 @@ public class GridManager : Singleton<GridManager>
     public  int width;
     public int height;
     public int score;
+   
 
     void Awake()
+    {
+        
+       
+        
+
+    }
+
+    void Start()
+    {
+        IntPlayer();
+        IntGrid();
+
+        Camera.main.transform.position = new Vector3(transform.position.x + gridSizeX / 2, (transform.position.y + gridSizeY / 2), -10);
+        Camera.main.orthographicSize = gridSizeX + (Screen.height / Screen.width > 1.77 ? 1.5f : 0);
+
+    }
+
+    public void IntPlayer()
     {
         width = gridSizeX;
         height = gridSizeY;
@@ -41,9 +59,9 @@ public class GridManager : Singleton<GridManager>
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
-            {               
+            {
                 GameObject newTileGO = Instantiate(tilePrefab, orginSpawnPoint + new Vector3(x, y, 0), Quaternion.identity);
-                newTileGO.transform.parent = transform; 
+                newTileGO.transform.parent = transform;
                 Tile newTile = newTileGO.GetComponent<Tile>();
                 tileGrid[x, y] = newTile;
                 newTile.x = x;
@@ -52,32 +70,29 @@ public class GridManager : Singleton<GridManager>
             }
         }
 
-        Camera.main.transform.position = new Vector3(transform.position.x + gridSizeX / 2, (transform.position.y + gridSizeY / 2), -10);
-        Camera.main.orthographicSize = gridSizeX + (Screen.height / Screen.width > 1.77 ? 1.5f : 0);
     }
-
-    void Start()
+    public void IntGrid()
     {
+        
+
+
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = 0; y < gridSizeY; y++)
             {
-                Ball cellBall = Instantiate(ballPrefab, tileGrid[x, y].transform).GetComponent<Ball>();
-
                 int color = Random.Range(0, sprites.Length);
+                Ball cellBall = Instantiate(ballPrefab, tileGrid[x, y].transform).GetComponent<Ball>();
 
                 cellBall.x = x;
                 cellBall.y = y;
                 cellBall.color = color;
 
                 ballGrid[x, y] = cellBall;
-
                 balls.Add(cellBall);
-                
+
             }
         }
     }
-
 
     public void CheckBalls(Ball ball)
     {
@@ -94,8 +109,7 @@ public class GridManager : Singleton<GridManager>
             {
                 FindBallsToDestroy(neighbor);
             }
-        }
-       
+        } 
     }
 
     public void DestroyBalls()
@@ -108,31 +122,35 @@ public class GridManager : Singleton<GridManager>
                 return;
             }
 
-
             else
             {
                 score++;
                 Debug.Log("Destroy");
-                ball.Destroy();
-                
+                ball.Destroy();              
             }
 
             balls.Remove(ball);
         }
-
-
-
-      
     }
 
-
-    public void winLevel()
+    public async void winLevel()
     {
-        if (balls.Count==0)
+        if (balls.Count == 0)
         {
             Debug.Log("You Win");
             SoundManager.Play(AudioClips.victory);
+
+            await Task.Delay(2300); 
+            UIManager.Instance.setTransition(Views.leaderboard);
+            UIManager.Instance.topPanel.SetActive(false);
+            gameObject.SetActive(false);
+            PlayerManager.Instance.gameObject.SetActive(false);
         }
+
+       
+
+
+      
     }
 
 }

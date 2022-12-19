@@ -83,7 +83,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0.0056152344
-        value: 0.67170143
+        value: 0.6128788
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -91,8 +91,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.9332055
-        value: 0.19684887
+        time: 0.9218987
+        value: 0.15272808
         inSlope: 0.21381545
         outSlope: 0.21381545
         tangentMode: 0
@@ -235,11 +235,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4717782668743472778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201982ce13766d54d8b432a928325f3e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a2c894028620435daadfa48f91fee4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: 0, y: 0, z: 0}
+  inMoveAndPop: 0
+  isInTouch: 0
+  moveCounter: 0
+  startPos: {x: -1, y: -1, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
+  shootDirection: 0
   speed: 10
   lastPos: {x: 0, y: 0, z: 0}
   trail: {fileID: 4717782667326274888}

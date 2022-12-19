@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: b3b6c266a2909428ca3ff21655c94764
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - SF Pro Rounded
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 937e492f3fe2e4fa2a0f28a9518c19a5, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
