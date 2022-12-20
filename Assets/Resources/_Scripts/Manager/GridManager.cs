@@ -6,23 +6,16 @@ public class GridManager : Singleton<GridManager>
 {
     public int gridSizeX;
     public int gridSizeY;
-
     public GameObject playerPrefab;
     public GameObject ballPrefab;
     public GameObject tilePrefab;
-    public Sprite[] sprites;
-    
-    [SerializeField]
+    public Sprite[] sprites;  
     public Color[] colorIndex;
-
     public List<Ball> ballsToDestroy = new List<Ball>();
     public List<Ball> balls = new List<Ball>();
-
     public Vector3 orginSpawnPoint;
-
     public Tile[,] tileGrid;
     public Ball[,] ballGrid;
-
     public  int width;
     public int height;
     public int score;
@@ -31,20 +24,16 @@ public class GridManager : Singleton<GridManager>
     {
         IntPlayer();
         IntGrid();
-
         Camera.main.transform.position = new Vector3(transform.position.x + gridSizeX / 2, (transform.position.y + gridSizeY / 2), -10);
         Camera.main.orthographicSize = gridSizeX + (Screen.height / Screen.width > 1.77 ? 1.5f : 0);
-
     }
 
     public void IntPlayer()
     {
         width = gridSizeX;
         height = gridSizeY;
-
         tileGrid = new Tile[width, height];
         ballGrid = new Ball[width, height];
-
         GameObject playerObject = Instantiate(playerPrefab, orginSpawnPoint + new Vector3(-1, -1, 0), Quaternion.identity);
 
         for (int x = 0; x < width; x++)
@@ -53,7 +42,6 @@ public class GridManager : Singleton<GridManager>
             {
                 GameObject newTileGO = Instantiate(tilePrefab, orginSpawnPoint + new Vector3(x, y, 0), Quaternion.identity);
                 newTileGO.transform.parent = transform;
-
                 Tile newTile = newTileGO.GetComponent<Tile>();
                 tileGrid[x, y] = newTile;
                 newTile.x = x;
@@ -61,7 +49,6 @@ public class GridManager : Singleton<GridManager>
 
             }
         }
-
     }
 
     public void IntGrid()
@@ -71,17 +58,13 @@ public class GridManager : Singleton<GridManager>
             for (int y = 0; y < gridSizeY; y++)
             {
                 int color = Random.Range(0, sprites.Length);
-                Ball cellBall = Instantiate(ballPrefab, tileGrid[x, y].transform).GetComponent<Ball>();
-
-                
+                Ball cellBall = Instantiate(ballPrefab, tileGrid[x, y].transform).GetComponent<Ball>(); 
                 cellBall.x = x;
                 cellBall.y = y;
                 cellBall.color = color;
-
                 ballGrid[x, y] = cellBall;
                 balls.Add(cellBall);
                 //colorBalls.Add(cellBall.GetComponent<SpriteRenderer>());
-
             }
         }
     }
@@ -94,15 +77,12 @@ public class GridManager : Singleton<GridManager>
     public void FindBallsToDestroy(Ball ball)
     {
         ballsToDestroy.Add(ball);
-       // colorBallsToDestroy.Add(ball.color);
+        //colorBallsToDestroy.Add(ball.color);
 
         foreach (Ball neighbor in ball.neighbors)
         {
             if (neighbor.color == ball.color & !ballsToDestroy.Contains(neighbor))
-            {
-                FindBallsToDestroy(neighbor);
-               
-            }
+            FindBallsToDestroy(neighbor); 
         }
     }
 
@@ -113,37 +93,27 @@ public class GridManager : Singleton<GridManager>
             if (ball == null)
             {
                 Debug.Log("ball is null");
-                return;
-            }
+                return; }
 
             else
             {
                 score++;
-                Debug.Log("Destroy");
-                ball.Destroy();     
-            }
+                ball.Destroy(); }
 
             balls.Remove(ball);
            // colorBalls.Remove(ball.GetComponent<SpriteRenderer>());
         }
-
     }
 
-
     public async void winLevel()
-    {
-        if (balls.Count == 0)
+    {  if (balls.Count == 0)
         {
             Debug.Log("You Win");
             SoundManager.Play(AudioClips.victory);
-
             await Task.Delay(2300); 
             UIManager.Instance.setTransition(Views.leaderboard);
             UIManager.Instance.topPanel.SetActive(false);
             gameObject.SetActive(false);
-            PlayerManager.Instance.gameObject.SetActive(false);
-        }
-
+            PlayerManager.Instance.gameObject.SetActive(false); }
     }
-
 }

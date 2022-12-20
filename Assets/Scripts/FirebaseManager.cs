@@ -18,7 +18,6 @@ public class FirebaseManager : MonoBehaviour
             dependencyStatus = task.Result;
             if (dependencyStatus == DependencyStatus.Available) InitializeFirebase();
             else AdsManager.adPrint("Could not resolve all Firebase dependencies: " + dependencyStatus);
-
         });
     }
 
@@ -44,7 +43,6 @@ public class FirebaseManager : MonoBehaviour
                 fetchData();
             });
     }
-
 
     void fetchData()
     {
