@@ -18,10 +18,10 @@ public class Ball : MonoBehaviour
 
     public void Start()
     {
-        animator.SetTrigger("BounceLeft");
-        animator.SetTrigger("BounceRight");
-        animator.SetTrigger("BounceLeft");
-        animator.SetTrigger("BounceUp");
+        //animator.SetTrigger("BounceLeft");
+        //animator.SetTrigger("BounceRight");
+        //animator.SetTrigger("BounceLeft");
+        //animator.SetTrigger("BounceUp");
 
         GetComponent<SpriteRenderer>().sprite = manager.sprites[color];
        

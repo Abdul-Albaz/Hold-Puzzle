@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System;
 using Random = UnityEngine.Random;
 
-enum ballColors
+public enum ballColors
 {
     red,blue,green,orange,purple
 }
